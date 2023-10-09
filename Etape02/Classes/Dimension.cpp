@@ -98,10 +98,10 @@ int Dimension::getHauteur() const
 void Dimension::Affiche() const
 {
 	cout << "[Dimension : largeur=";
-	if (largeur) cout << getLargeur();
-	else cout << "???";
+	cout << getLargeur();
+	
 	cout << ", hauteur=";
-	if (hauteur) cout << getHauteur();
-	else cout << "???";
+	cout << getHauteur();
+	
 	cout << "]" << endl;
 }

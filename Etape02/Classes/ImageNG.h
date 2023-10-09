@@ -15,6 +15,11 @@ class ImageNG
 
 	public:
 		ImageNG(void);
+		ImageNG(int i,const char *n);
+		ImageNG(int i,const char *n,const Dimension& d);
+		ImageNG(const ImageNG& p);
+		
+
 		~ImageNG();
 
 		void setId(int i);
@@ -26,9 +31,7 @@ class ImageNG
 		Dimension getDimension() const;
 	
 		void Affiche() const;
-		ImageNG(int i,const char *n);
-		ImageNG(const ImageNG& p);
-		ImageNG(int i,const char *n,const Dimension& d);
+		
 
 };
 
