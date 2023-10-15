@@ -27,7 +27,7 @@ class ImageNG
 		void setNom(const char *n);
 		void setDimension(const Dimension& d);
 		void setPixel(int x, int y, int val);
-		void setBackground(int val);
+		void setBackground(const int val);
 
 		int getId() const;
 		const char * getNom() const;

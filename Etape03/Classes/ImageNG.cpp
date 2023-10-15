@@ -40,8 +40,8 @@ ImageNG::ImageNG(int i,const char *n, const Dimension& d)
 	setId(i);
 	nom = NULL;
 	setNom(n);
-	setDimension(d);
 	matrice = NULL;
+	setDimension(d);
 	init_matrice();
 }
 
@@ -57,8 +57,8 @@ ImageNG::ImageNG(const ImageNG& p)
 	setId(p.getId());
 	nom = NULL;
 	setNom(p.getNom());
-	setDimension(p.getDimension());
 	matrice = NULL;
+	setDimension(p.getDimension());
 	init_matrice();
 	for(int i=0; i<dimension.getLargeur(); i++)
 	{
@@ -114,7 +114,15 @@ void ImageNG::setNom(const char *n)
 
 void ImageNG::setDimension(const Dimension& d)
 {
+	if(d.getLargeur()>500)
+	{
+		return;
+	}
 	dimension.setLargeur(d.getLargeur());
+	if(d.getHauteur()>500)
+	{
+		return;
+	};
 	dimension.setHauteur(d.getHauteur());
 }
 
