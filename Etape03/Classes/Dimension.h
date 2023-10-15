@@ -17,12 +17,12 @@ class Dimension
 		static const Dimension FULL_HD;
 
 		Dimension(void);
-		Dimension(const int l, const int h);
-		Dimension(const Dimension& d);
+		Dimension(const int, const int);
+		Dimension(const Dimension&);
 		~Dimension();
 
-		void setLargeur(int l);
-		void setHauteur(int h);
+		void setLargeur(int);
+		void setHauteur(int);
 
 		int getLargeur() const;
 		int getHauteur() const;

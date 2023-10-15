@@ -32,10 +32,10 @@ class ImageNG
 		int getId() const;
 		const char * getNom() const;
 		Dimension getDimension() const;
-		int getPixel(int x, int y) const;
+		int getPixel(const int x,const int y) const;
 	
 		void Affiche() const;
-		void dessine();
+		void Dessine();
 		void importFromFile(const char* fichier);
 		void exportToFile(const char* fichier, const char* format);
 

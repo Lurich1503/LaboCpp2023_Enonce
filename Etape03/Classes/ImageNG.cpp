@@ -13,6 +13,7 @@ ImageNG::ImageNG(void)
 	setId(-1);
 	nom = NULL;
 	setNom("???");
+	matrice = NULL;
 	init_matrice();
 }
 
@@ -27,6 +28,7 @@ ImageNG::ImageNG(int i,const char *n)
 	setId(i);
 	nom = NULL;
 	setNom(n);
+	matrice = NULL;
 	init_matrice();
 }
 
@@ -39,6 +41,7 @@ ImageNG::ImageNG(int i,const char *n, const Dimension& d)
 	nom = NULL;
 	setNom(n);
 	setDimension(d);
+	matrice = NULL;
 	init_matrice();
 }
 
@@ -55,7 +58,15 @@ ImageNG::ImageNG(const ImageNG& p)
 	nom = NULL;
 	setNom(p.getNom());
 	setDimension(p.getDimension());
+	matrice = NULL;
 	init_matrice();
+	for(int i=0; i<dimension.getLargeur(); i++)
+	{
+		for(int j=0; j<dimension.getHauteur(); j++)
+		{
+			setPixel(i, j, p.getPixel(i, j));
+		}
+	}
 }
 
 //----------------------------------------------
@@ -70,11 +81,14 @@ ImageNG::~ImageNG()
 	if (nom)
 		delete nom;
 
-	for(int x=0; x<dimension.getLargeur(); x++)
-		{
-			delete[] matrice[x];
-		}
-	delete[] matrice;
+	if(matrice)
+	{
+		for(int x=0; x<dimension.getLargeur(); x++)
+			{
+				delete[] matrice[x];
+			}
+		delete[] matrice;
+	}
 }
 
 
@@ -106,7 +120,7 @@ void ImageNG::setDimension(const Dimension& d)
 
 void ImageNG::setPixel(int x, int y, int val)
 {
-	if(val<=0||val>255)
+	if(val<0||val>255)
  	{
  		return;
  	}
@@ -115,10 +129,6 @@ void ImageNG::setPixel(int x, int y, int val)
 
 void ImageNG::setBackground(int val)
 {
-	if(val<=0||val>255)
- 	{
- 		return;
- 	}
 	for (int i=0; i<dimension.getLargeur(); i++)
 	{
 		for(int j=0; j<dimension.getHauteur();j++)
@@ -167,17 +177,17 @@ void ImageNG::Affiche() const
 
 void ImageNG::init_matrice()
 {
-	if(dimension.getLargeur()<=500 && dimension.getHauteur()<=500)
-	{
-		matrice = new int*[dimension.getLargeur()];
-		for (int x=0 ; x < dimension.getLargeur() ; x++) 
-			{
-				matrice[x] = new int[dimension.getHauteur()];
-			}
-	}
+	
+	matrice = new int*[dimension.getLargeur()];
+	for (int x=0 ; x < dimension.getLargeur() ; x++) 
+		{
+			matrice[x] = new int[dimension.getHauteur()];
+		}
+	setBackground(0);
+	
 }
 
-void ImageNG::dessine()
+void ImageNG::Dessine()
 {
 	MyQT::ViewImage(*this);
 }
