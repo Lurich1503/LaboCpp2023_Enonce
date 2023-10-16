@@ -202,6 +202,14 @@ void ImageNG::redimMatrice(Dimension oldDimension)
 			newMatrice[x] = new int[dimension.getHauteur()];
 		}	
 
+	for(int x=0; x < dimension.getLargeur(); x++) // on met chaque pixel de la nouvelle matrice à 0
+	{
+		for(int y=0; y < dimension.getHauteur(); y++)
+		{
+			newMatrice[x][y]=0;
+		}
+	}
+
 	for(int x=0; x < min(dimension.getLargeur(),oldDimension.getLargeur()); x++) // on met chaque pixel de l'ancienne matrice dans la nouvelle matrice
 	{
 		for(int y=0; y < min(dimension.getHauteur(),oldDimension.getHauteur()); y++)
