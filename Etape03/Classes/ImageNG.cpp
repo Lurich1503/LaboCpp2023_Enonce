@@ -115,17 +115,9 @@ void ImageNG::setNom(const char *n)
 void ImageNG::setDimension(const Dimension& d)
 {
 	Dimension oldDimension(dimension);
-	#ifdef DEBUG
-		cout<<"Ancienne dim: "<<dimension.getLargeur()<<" x "<<dimension.getHauteur()<<endl;	
-	#endif
 
 	dimension.setLargeur(d.getLargeur());
 	dimension.setHauteur(d.getHauteur());
-
-	#ifdef DEBUG
-		cout<<"Nouvelle dim: "<<dimension.getLargeur()<<" x "<<dimension.getHauteur()<<endl;	
-		cout<<"Ancienne dim: "<<oldDimension.getLargeur()<<" x "<<oldDimension.getHauteur()<<endl;
-	#endif
 
 	if(matrice != NULL)
 	{
