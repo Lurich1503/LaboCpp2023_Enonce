@@ -13,6 +13,7 @@ class ImageNG
 		Dimension dimension;
 		int** matrice;  
 		void init_matrice();
+		void redimMatrice(Dimension);
 
 	public:
 		ImageNG(void);

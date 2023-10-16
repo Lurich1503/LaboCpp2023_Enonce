@@ -114,16 +114,23 @@ void ImageNG::setNom(const char *n)
 
 void ImageNG::setDimension(const Dimension& d)
 {
-	if(d.getLargeur()>500)
-	{
-		return;
-	}
+	Dimension oldDimension(dimension);
+	#ifdef DEBUG
+		cout<<"Ancienne dim: "<<dimension.getLargeur()<<" x "<<dimension.getHauteur()<<endl;	
+	#endif
+
 	dimension.setLargeur(d.getLargeur());
-	if(d.getHauteur()>500)
-	{
-		return;
-	};
 	dimension.setHauteur(d.getHauteur());
+
+	#ifdef DEBUG
+		cout<<"Nouvelle dim: "<<dimension.getLargeur()<<" x "<<dimension.getHauteur()<<endl;	
+		cout<<"Ancienne dim: "<<oldDimension.getLargeur()<<" x "<<oldDimension.getHauteur()<<endl;
+	#endif
+
+	if(matrice != NULL)
+	{
+		redimMatrice(oldDimension);
+	}
 }
 
 void ImageNG::setPixel(int x, int y, int val)
@@ -185,7 +192,6 @@ void ImageNG::Affiche() const
 
 void ImageNG::init_matrice()
 {
-	
 	matrice = new int*[dimension.getLargeur()];
 	for (int x=0 ; x < dimension.getLargeur() ; x++) 
 		{
@@ -193,6 +199,33 @@ void ImageNG::init_matrice()
 		}
 	setBackground(0);
 	
+}
+
+void ImageNG::redimMatrice(Dimension oldDimension)
+{
+	int** newMatrice = new int*[dimension.getLargeur()]; // créer une nouvelle matrice avec nouvelles dimensions
+
+	for (int x=0 ; x < dimension.getLargeur() ; x++) 
+		{
+			newMatrice[x] = new int[dimension.getHauteur()];
+		}	
+
+	for(int x=0; x < min(dimension.getLargeur(),oldDimension.getLargeur()); x++) // on met chaque pixel de l'ancienne matrice dans la nouvelle matrice
+	{
+		for(int y=0; y < min(dimension.getHauteur(),oldDimension.getHauteur()); y++)
+		{
+			newMatrice[x][y]=getPixel(x,y);
+		}
+	}	
+
+	for(int x=0; x<oldDimension.getLargeur(); x++) // on supprime l'ancienne matrice;
+			{
+				delete[] matrice[x];
+			}
+		delete[] matrice;
+
+	matrice = newMatrice; // on met la nouvelle matrice dans l'ancienne matrice 
+
 }
 
 void ImageNG::Dessine()
