@@ -20,7 +20,7 @@ Dimension::Dimension(void)
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-Dimension::Dimension(const int l, const int h)
+Dimension::Dimension(int l, int h)
 {
 	#ifdef DEBUG
 	cout << ">>> Dimension : constructeur d'initialisation <<<" << endl;

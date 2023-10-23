@@ -17,7 +17,7 @@ class Dimension
 		static const Dimension FULL_HD;
 
 		Dimension(void);
-		Dimension(const int, const int);
+		Dimension(int, int);
 		Dimension(const Dimension&);
 		~Dimension();
 
