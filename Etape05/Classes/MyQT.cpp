@@ -161,7 +161,7 @@ void MyQT::ExportToFile(const ImageRGB & image, const char* fichier,const char* 
 //***************************************************************************************
 //***** Images B ************************************************************************
 //***************************************************************************************
-/*
+
 void MyQT::ViewImage(const ImageB & image)
 {
   int largeur = image.getDimension().getLargeur();
@@ -211,4 +211,3 @@ void MyQT::ExportToFile(const ImageB & image, const char* fichier,const char* fo
   // Ecriture sur disque
   pixmap.save(fichier,format);
 }
-*/
