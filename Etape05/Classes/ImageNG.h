@@ -54,12 +54,6 @@ class ImageNG : public Image
 		int operator>(const ImageNG&);
 		int operator==(const ImageNG&);
 
-
-
-
-
-		
-
 };
 
 #endif

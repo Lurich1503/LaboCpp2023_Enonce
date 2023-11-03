@@ -7,7 +7,7 @@ using namespace std;
 
 #include "Couleur.h"
 #include "ImageRGB.h"
-#include "ImageB.h"
+/*#include "ImageB.h"*/
 #include "ImageNG.h"
 
 int  Menu();
@@ -37,10 +37,10 @@ int main(int argc,char* argv[])
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
       case 3 : Essai3(); break;
-      case 4 : Essai4(); break;
+      /*case 4 : Essai4(); break;
       case 5 : Essai5(); break;
       case 6 : Essai6(); break;
-      case 7 : Essai7(); break;
+      case 7 : Essai7(); break;*/
       default : fini = true ; break;
     }
   }
@@ -158,7 +158,7 @@ void Essai3()
   image.Dessine();
   image.exportToFile("joconde2.png","PNG");
 }
-
+/*
 //*************************************************************************************************
 //*** Tests de setBackground, setPixel, Dessine et constructeur de copie de ImageB **************** 
 //*************************************************************************************************
@@ -327,4 +327,4 @@ void Essai7()
   for (int i=0 ; i<10 ; i++) delete image[i];
 }
 
-
+*/

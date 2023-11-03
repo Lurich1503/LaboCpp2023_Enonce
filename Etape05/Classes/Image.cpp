@@ -122,19 +122,3 @@ Dimension Image::getDimension() const
 	return dimension;
 }
 
-
-//----------------------------------------------
-//----------SURCHARGE DES OPERATEURS
-//----------------------------------------------
-Image& Image::operator=(const Image& p)
-{
-#ifdef DEBUG
-	cout << ">>> Image : operator=" << endl;
-#endif
-
-	setId(p.getId());
-	setNom(p.getNom());
-	dimension = p.getDimension();
-
-	return (*this);
-}
