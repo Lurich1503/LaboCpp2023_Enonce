@@ -1,6 +1,7 @@
 #include "ImageRGB.h"
 #include <string.h>
 #include "MyQT.h"
+#include "XYException.h"
 
 //----------------------------------------------
 //---------------CONSTRUCTEURS
@@ -107,6 +108,46 @@ void ImageRGB::setBackground(const Couleur& valeur)
 
 void ImageRGB::setPixel(int x, int y, const Couleur& valeur)
 {
+	if (x < 0 && y < 0) 
+	  {
+      	throw XYException(100,"Coordonnées x et y invalides !");
+      } 
+      else 
+      	{
+      		if (x < 0)
+      		{
+        		throw XYException(120,"Coordonnée x invalide !");
+    		} 
+    		else
+    		{
+    			if (y < 0)
+    			{
+        			throw XYException(121,"Coordonnée y invalide !");
+    			} 
+    			else 
+    			{
+    				if (x >= dimension.getLargeur() && y >= dimension.getHauteur()) 
+    				{
+        				throw XYException(100,"Coordonnées x et y hors limites !");
+    				} 
+    				else 
+    				{
+    					if (x >= dimension.getLargeur()) 
+    					{
+        					throw XYException(120,"Coordonnée x hors limites !");
+    					} 
+    					else 
+    					{
+    						if (y >= dimension.getHauteur()) 
+    						{
+        						throw XYException(121,"Coordonnée y hors limites !");
+    						}
+    					}
+    				}
+    			}
+    		}
+    	}
+    	
 	matrice[x][y]=valeur;
 }
 

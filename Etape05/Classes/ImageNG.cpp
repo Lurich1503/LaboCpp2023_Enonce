@@ -427,39 +427,22 @@ int ImageNG::operator==(const ImageNG& p)
 
 int ImageNG::compImg(const ImageNG& p)
 {
-	int cmpt=0,egal=0,petit=0,grand=0;
-	for(int x=0; x<p.dimension.getLargeur(); x++)
-	{
-		for(int y=0; y<p.dimension.getHauteur(); y++)
-		{
-			cmpt++;
-			if(matrice[x][y] == p.getPixel(x,y))
-			{
-				egal++;
-			}
-			if(matrice[x][y] < p.getPixel(x,y))
-			{
-				petit++;
-			}
-			if(matrice[x][y] > p.getPixel(x,y))
-			{
-				grand++;
-			}
-		}
-	}
-	if(cmpt == egal)
-	{
-		return 0;
-	}
-	if(cmpt == petit)
-	{
-		return -1;
-	}
-	if(cmpt == grand)
-	{
-		return 1;
-	}
-	return 2;
-
-
+	 for (int x = 0; x < dimension.getLargeur(); x++) 
+	 {
+        for (int y = 0; y < dimension.getHauteur(); y++) 
+        {
+            if (matrice[x][y] < p.getPixel(x, y)) 
+            {
+                return -1;  // L'image actuelle est plus petite
+            } 
+            else 
+            {
+            	if (matrice[x][y] > p.getPixel(x, y)) 
+            	{
+                	return 1;   // L'image actuelle est plus grande
+            	}
+            }
+        }
+    }
+    return 0; // Les images sont égales
 }

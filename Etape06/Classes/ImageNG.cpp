@@ -2,6 +2,7 @@
 #include <string.h>
 #include "MyQT.h"
 #include "RGBException.h"
+#include "XYException.h"
 
 //----------------------------------------------
 //---------------CONSTRUCTEURS
@@ -113,6 +114,47 @@ void ImageNG::setDimension(const Dimension& d)
 void ImageNG::setPixel(int x, int y, int val)
 {
 	if(val < 0|| val > 255) throw RGBException(val, "Niveau de gris invalide !");
+
+	  if (x < 0 && y < 0) 
+	  {
+      	throw XYException(100,"Coordonnées x et y invalides !");
+      } 
+      else 
+      	{
+      		if (x < 0)
+      		{
+        		throw XYException(120,"Coordonnée x invalide !");
+    		} 
+    		else
+    		{
+    			if (y < 0)
+    			{
+        			throw XYException(121,"Coordonnée y invalide !");
+    			} 
+    			else 
+    			{
+    				if (x >= dimension.getLargeur() && y >= dimension.getHauteur()) 
+    				{
+        				throw XYException(100,"Coordonnées x et y hors limites !");
+    				} 
+    				else 
+    				{
+    					if (x >= dimension.getLargeur()) 
+    					{
+        					throw XYException(120,"Coordonnée x hors limites !");
+    					} 
+    					else 
+    					{
+    						if (y >= dimension.getHauteur()) 
+    						{
+        						throw XYException(121,"Coordonnée y hors limites !");
+    						}
+    					}
+    				}
+    			}
+    		}
+    	}
+
 	matrice[x][y]=val;
 }
 
@@ -425,39 +467,42 @@ int ImageNG::operator==(const ImageNG& p)
 
 int ImageNG::compImg(const ImageNG& p)
 {
-	int cmpt=0,egal=0,petit=0,grand=0;
-	for(int x=0; x<p.dimension.getLargeur(); x++)
-	{
-		for(int y=0; y<p.dimension.getHauteur(); y++)
-		{
-			cmpt++;
-			if(matrice[x][y] == p.getPixel(x,y))
-			{
-				egal++;
-			}
-			if(matrice[x][y] < p.getPixel(x,y))
-			{
-				petit++;
-			}
-			if(matrice[x][y] > p.getPixel(x,y))
-			{
-				grand++;
-			}
-		}
-	}
-	if(cmpt == egal)
-	{
-		return 0;
-	}
-	if(cmpt == petit)
-	{
-		return -1;
-	}
-	if(cmpt == grand)
-	{
-		return 1;
-	}
-	return 2;
+	 if (dimension.getLargeur() != p.dimension.getLargeur() && dimension.getHauteur() != p.dimension.getHauteur()) 
+	 {
+        throw XYException(100,"Les images n'ont pas les memes dimensions(largeurs et hauteurs diffrentes)");
+     }
+     else
+     {
+     	if(dimension.getLargeur() != p.dimension.getLargeur())
+     	{
+     		throw XYException(120,"Les images n'ont pas les memes dimensions(largeurs differentes)");
+     	}
+     	else
+     	{ 
+     		if(dimension.getHauteur() != p.dimension.getHauteur())
+     		{
+     			throw XYException(121,"Les images n'ont pas les memes dimensions(hauteurs differentes)");
+     		}
+     	}
+     }
 
 
+	 for (int x = 0; x < dimension.getLargeur(); x++) 
+	 {
+        for (int y = 0; y < dimension.getHauteur(); y++) 
+        {
+            if (matrice[x][y] < p.getPixel(x, y)) 
+            {
+                return -1;  // L'image actuelle est plus petite
+            } 
+            else 
+            {
+            	if (matrice[x][y] > p.getPixel(x, y)) 
+            	{
+                	return 1;   // L'image actuelle est plus grande
+            	}
+            }
+        }
+    }
+    return 0; // Les images sont égales
 }

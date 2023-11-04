@@ -1,4 +1,5 @@
 #include "Dimension.h"
+#include "XYException.h"
 
 const Dimension Dimension::VGA(640, 480);
 const Dimension Dimension::HD(1280, 720);
@@ -60,21 +61,13 @@ Dimension::~Dimension()
 //----------------------------------------------
 void Dimension::setLargeur(int l)
 {
-	if(l<=0)
-	{
-		l=400;
-		return;
-	}
+	if(l<=0) throw XYException(120,"Dimension : largeur plus petite que 1 impossible !");
 	largeur = l;
 }
 
 void Dimension::setHauteur(int h)
 {
-	if(h<=0)
-	{
-		h=300;
-		return;
-	}
+	if(h<=0) throw XYException(121,"Dimension : hauteur plus petite que 1 impossible !");
 	hauteur = h;
 }
 
