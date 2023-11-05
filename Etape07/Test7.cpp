@@ -2,8 +2,10 @@
 #include <iostream>
 
 #include "ArrayList.h"
-#include "Iterateur.h"
-#include "Couleur.h"
+#include "Exception.h"
+#include "ArrayListException.h"
+/*#include "Iterateur.h"
+#include "Couleur.h"*/
 
 using namespace std;
 
@@ -28,10 +30,10 @@ int main(int argc,char* argv[])
     {
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
-      case 3 : Essai3(); break;
+      /*case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
-      case 6 : Essai6(); break;
+      case 6 : Essai6(); break;*/
       default : fini = true ; break;
     }
   }
@@ -83,22 +85,31 @@ void Essai1()
   liste.Affiche();                                       // --> (3 -2 5 -1 0 17)
   cout << "La liste contient " << liste.getNombreElements() << " elements." << endl;
 
-  cout << "----- 1.2 On recupere une elements de la Liste dans le supprimer ----------------------------" << endl;
-  cout << "On recupere l'element d'indice 3 (-1)  : " << liste.getElement(3) << endl;
-  liste.Affiche();
+  try
+  {
+    cout << "----- 1.2 On recupere une elements de la Liste dans le supprimer ----------------------------" << endl;
+    cout << "On recupere l'element d'indice 3 (-1)  : " << liste.getElement(3) << endl;
+    liste.Affiche();
 
-  cout << "----- 1.3 On recupere une elements de la Liste et on le modifie a 100 -----------------------" << endl;
-  cout << "On modifie l'element d'indice 4 (0)  : " << endl; 
-  liste.getElement(4) = 100;
-  liste.Affiche();
+    cout << "----- 1.3 On recupere une elements de la Liste et on le modifie a 100 -----------------------" << endl;
+    cout << "On modifie l'element d'indice 4 (0)  : " << endl; 
+    liste.getElement(4) = 100;
+    liste.Affiche();
 
-  cout << "----- 1.4 On retire des elements de la Liste ------------------------------------------------" << endl;
-  cout << "On retire l'element d'indice 4 (100) : " << liste.retireElement(4) << endl;
-  liste.Affiche();
-  cout << "On retire l'element d'indice 0 (3)   : " << liste.retireElement(0) << endl;
-  liste.Affiche();
-  cout << "On retire l'element d'indice 3 (17)  : " << liste.retireElement(3) << endl;
-  liste.Affiche();
+    cout << "----- 1.4 On retire des elements de la Liste ------------------------------------------------" << endl;
+    cout << "On retire l'element d'indice 4 (100) : " << liste.retireElement(4) << endl;
+    liste.Affiche();
+    cout << "On retire l'element d'indice 0 (3)   : " << liste.retireElement(0) << endl;
+    liste.Affiche();
+    cout << "On retire l'element d'indice 3 (17)  : " << liste.retireElement(3) << endl;
+    liste.Affiche();
+  }
+  catch(ARRAYLISTException m)
+  {
+    cout << "Exception ARRAYLISTException catchee..." << endl;
+    cout << "message = " << m.getMessageErreur() << endl;
+    cout << "valeur de l'indice = " << m.getValeur() << endl;
+  }
 
   cout << endl;
 }
@@ -135,8 +146,8 @@ void Essai2()
   liste.Affiche();
   cout << endl;
 }
-
-/*******************************************************************************************************/
+/*
+/*******************************************************************************************************
 void Essai3()
 {
   cout << "----- 3. Test de l'operateur = de ArrayList avec des entiers ---------------------------------" << endl;
@@ -170,7 +181,7 @@ void Essai3()
   cout << endl;
 }
 
-/*********************************************************************************************/
+/*********************************************************************************************
 void Essai4()
 {
   cout << "----- 4. Test du template ArrayList avec des objets de la classe Couleur --------------" << endl;
@@ -196,7 +207,7 @@ void Essai4()
   cout << endl;
 }
 
-/*******************************************************************************************************/
+/*******************************************************************************************************
 void Essai5()
 {
   cout << "----- 5. Test de l'iterateur avec une ArrayList d'entiers ------------------------" << endl;
@@ -234,7 +245,7 @@ void Essai5()
   }
 }
 
-/*******************************************************************************************************/
+/*******************************************************************************************************
 void Essai6()
 {
   cout << "----- 6. Test de l'iterateur avec une ArrayList de couleurs ---------------------" << endl;
@@ -266,4 +277,5 @@ void Essai6()
   }
 }
 
-/*******************************************************************************************************/
+/*******************************************************************************************************
+*/
