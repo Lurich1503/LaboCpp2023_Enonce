@@ -77,7 +77,7 @@ ImageNG::ImageNG(const char *n)
 
 	setId(-1);
 	nom = NULL;
-	setNom("Défaut");
+	setNom(n);
 	matrice = NULL;
 	init_matrice();
 	importFromFile(n);

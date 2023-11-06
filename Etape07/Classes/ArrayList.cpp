@@ -188,19 +188,28 @@ T ArrayList<T>::retireElement(int ind)
     return valeurRetiree;
 }
 
-/*
+
 //----------------------------------------------
 //----------SURCHARGE DES OPERATEURS
 //----------------------------------------------
 template <class T>
 ArrayList<T>& ArrayList<T>::operator=(const ArrayList<T> &autreListe)
 {
+	Cellule<T> *pCur = autreListe.pTete;
 
+	while(pCur != NULL)
+	{
+		insereElement(pCur->valeur);
+		pCur = pCur->suivant;
+	}
+	return *(this);
 }
-*/
+
 
 
 //----------------------------------------------
 //----------INSTANCIATION DES TEMPLATES
 //----------------------------------------------
 template class ArrayList<int>;
+#include "Couleur.h"
+template class ArrayList<Couleur>;

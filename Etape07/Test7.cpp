@@ -4,8 +4,8 @@
 #include "ArrayList.h"
 #include "Exception.h"
 #include "ArrayListException.h"
-/*#include "Iterateur.h"
-#include "Couleur.h"*/
+/*#include "Iterateur.h"*/
+#include "Couleur.h"
 
 using namespace std;
 
@@ -30,9 +30,9 @@ int main(int argc,char* argv[])
     {
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
-      /*case 3 : Essai3(); break;
+      case 3 : Essai3(); break;
       case 4 : Essai4(); break;
-      case 5 : Essai5(); break;
+      /*case 5 : Essai5(); break;
       case 6 : Essai6(); break;*/
       default : fini = true ; break;
     }
@@ -146,8 +146,8 @@ void Essai2()
   liste.Affiche();
   cout << endl;
 }
-/*
-/*******************************************************************************************************
+
+/*******************************************************************************************************/
 void Essai3()
 {
   cout << "----- 3. Test de l'operateur = de ArrayList avec des entiers ---------------------------------" << endl;
@@ -181,7 +181,7 @@ void Essai3()
   cout << endl;
 }
 
-/*********************************************************************************************
+/*********************************************************************************************/
 void Essai4()
 {
   cout << "----- 4. Test du template ArrayList avec des objets de la classe Couleur --------------" << endl;
@@ -206,7 +206,7 @@ void Essai4()
 
   cout << endl;
 }
-
+/*
 /*******************************************************************************************************
 void Essai5()
 {

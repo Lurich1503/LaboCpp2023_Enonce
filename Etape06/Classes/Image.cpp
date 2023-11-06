@@ -62,7 +62,7 @@ Image::Image(const char *n)
 
 	setId(-1);
 	nom = NULL;
-	setNom("Défaut");
+	setNom(n);
 }
 
 //----------------------------------------------

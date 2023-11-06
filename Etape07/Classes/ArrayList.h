@@ -34,7 +34,7 @@ template<class T> class ArrayList
 
 		T retireElement(int ind);
 
-		/*ArrayList<T>& operator=(const ArrayList<T>&);*/
+		ArrayList<T>& operator=(const ArrayList<T>&);
 
 };
 
