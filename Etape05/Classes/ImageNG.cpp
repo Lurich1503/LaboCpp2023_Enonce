@@ -365,6 +365,11 @@ ImageNG operator+(int nb, ImageNG& p)
 	return p+nb;
 }
 
+ImageNG operator-(int nb, ImageNG& p)
+{
+	return p-nb;
+}
+
 ImageNG ImageNG::operator++()
 {
 	(*this) = (*this)+20;

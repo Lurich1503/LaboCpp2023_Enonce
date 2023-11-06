@@ -118,10 +118,40 @@ ostream& operator<<(ostream& s, const Dimension& d)
 
 istream& operator>>(istream& s, Dimension& d)
 {
-	Dimension D;
-	//Saisie de l et h;
-	d.largeur = D.largeur;
-	d.hauteur = D.hauteur;
+	int largeur,hauteur,erreur=0;
+
+	do
+	{
+		cout << "entrez une largeur (0 < largeur > 500): ";
+		s>>largeur;
+		if(largeur < 1 || largeur > 500)
+		{
+			erreur = 1;
+		}
+		else
+		{
+			cout << "valeur bien enregistrée !" << endl;
+			erreur = 0;
+		}
+	}while(erreur == 1);
+
+	do
+	{
+		cout << "entrez une hauteur (0 < hauteur > 500): ";
+		s>>hauteur;
+		if(hauteur < 1 || hauteur > 500)
+		{
+			erreur = 1;
+		}
+		else
+		{
+			cout << "valeur bien enregistrée !" << endl;
+			erreur = 0;
+		}
+	}while(erreur == 1);
+
+	d.largeur = largeur;
+	d.hauteur = hauteur;
 	return s;
 }
 

@@ -111,10 +111,34 @@ ostream& operator<<(ostream& s, const Dimension& d)
 
 istream& operator>>(istream& s, Dimension& d)
 {
-	Dimension D;
-	//Saisie de l et h;
-	d.largeur = D.largeur;
-	d.hauteur = D.hauteur;
+	int largeur,hauteur;
+
+	cout << "entrez une largeur (0 < largeur > 500): ";
+	s>>largeur;
+	cout << "entrez une hauteur (0 < hauteur > 500): ";
+	s>>hauteur;
+
+	if ((largeur < 1 || largeur > 500) && (hauteur < 1 || hauteur > 500)) 
+	 {
+        throw XYException(100,"Dimension : la largeur et la hauteurs sont plus petites que 1 ou plus grande que 500 (IMPOSSIBLE)!");
+     }
+     else
+     {
+     	if(largeur < 1 || largeur > 500)
+     	{
+     		throw XYException(120,"Dimension : largeur plus petite que 1 ou plus grande que 500 (IMPOSSIBLE)!");
+     	}
+     	else
+     	{ 
+     		if(hauteur < 1 || hauteur > 500)
+     		{
+     			throw XYException(121,"Dimension : hauteur plus petite que 1 ou plus grande que 500 (IMPOSSIBLE)!");
+     		}
+     	}
+     }
+
+	d.largeur = largeur;
+	d.hauteur = hauteur;
 	return s;
 }
 

@@ -9,8 +9,9 @@ class ImageNG
 {
 	friend ostream& operator<<(ostream&, const ImageNG&);
 	friend ImageNG operator+(ImageNG&, int);
-	friend ImageNG operator-(ImageNG&, int);
 	friend ImageNG operator+(int, ImageNG&);
+	friend ImageNG operator-(ImageNG&, int);
+	friend ImageNG operator-(int, ImageNG&);
 	friend ImageNG operator-(ImageNG&, ImageNG&);
 
 	private:
