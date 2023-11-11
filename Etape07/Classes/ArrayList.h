@@ -11,6 +11,7 @@ template<class T> struct Cellule //structure de Cellule
 	Cellule<T> *suivant;
 };
 
+template<class T> class Iterateur; //classe declaree mais pas encore definie
 
 template<class T> class ArrayList
 {
@@ -35,6 +36,25 @@ template<class T> class ArrayList
 		T retireElement(int ind);
 
 		ArrayList<T>& operator=(const ArrayList<T>&);
+
+		friend class Iterateur<T>;
+
+};
+
+template<class T>
+class Iterateur
+{
+	private:
+		ArrayList<T> &p;
+		Cellule<T> *pCurliste;
+	public: 
+		Iterateur (ArrayList<T> &l);
+		void reset();
+		bool end();
+		void operator++();
+		void operator++(int);
+		operator T() const;
+		T& operator&(void);
 
 };
 
