@@ -4,7 +4,7 @@
 #include "ArrayList.h"
 #include "Exception.h"
 #include "ArrayListException.h"
-/*#include "Iterateur.h"*/
+#include "Iterateur.h"
 #include "Couleur.h"
 
 using namespace std;
@@ -32,8 +32,8 @@ int main(int argc,char* argv[])
       case 2 : Essai2(); break;
       case 3 : Essai3(); break;
       case 4 : Essai4(); break;
-      /*case 5 : Essai5(); break;
-      case 6 : Essai6(); break;*/
+      case 5 : Essai5(); break;
+      case 6 : Essai6(); break;
       default : fini = true ; break;
     }
   }

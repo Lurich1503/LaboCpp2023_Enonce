@@ -2,8 +2,6 @@
 #include <string.h>
 #include "ArrayListException.h"
 
-/******* Class ArrayList*******/
-
 //----------------------------------------------
 //---------------CONSTRUCTEURS
 //----------------------------------------------
@@ -207,59 +205,10 @@ ArrayList<T>& ArrayList<T>::operator=(const ArrayList<T> &autreListe)
 	return *(this);
 }
 
-/******* Class Iterateur *******/
-
-
-template<class T>
-Iterateur<T>::Iterateur (ArrayList<T> &l):p(l), pCurliste(l.pTete)
-{
-
-}
-
-template<class T>
-void Iterateur<T>::reset()
-{
-	pCurliste = p.pTete;
-}
-
-template<class T>
-bool Iterateur<T>::end()
-{
-	return pCurliste == 0;
-}
-
-template<class T>
-void Iterateur<T>::operator++()
-{
-	if(pCurliste)
-	{
-		pCurliste = pCurliste->suivant;
-	}
-}
-
-template<class T>
-void Iterateur<T>::operator++(int)
-{
-	return operator++();
-}
-
-template<class T>
-Iterateur<T>::operator T() const
-{
-	return pCurliste->valeur;
-}
-
-template<class T>
-T& Iterateur<T>::operator& (void)
-{
-	return pCurliste->valeur;
-}
-
 //----------------------------------------------
 //----------INSTANCIATION DES TEMPLATES
 //----------------------------------------------
 template class ArrayList<int>;
-template class Iterateur<int>;
 #include "Couleur.h"
 template class ArrayList<Couleur>;
-template class Iterateur<Couleur>;
+

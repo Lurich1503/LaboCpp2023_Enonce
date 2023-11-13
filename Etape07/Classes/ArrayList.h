@@ -41,21 +41,4 @@ template<class T> class ArrayList
 
 };
 
-template<class T>
-class Iterateur
-{
-	private:
-		ArrayList<T> &p;
-		Cellule<T> *pCurliste;
-	public: 
-		Iterateur (ArrayList<T> &l);
-		void reset();
-		bool end();
-		void operator++();
-		void operator++(int);
-		operator T() const;
-		T& operator&(void);
-
-};
-
 #endif
