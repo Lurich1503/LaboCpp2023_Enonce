@@ -8,11 +8,7 @@ using namespace std;
 class ImageNG
 {
 	friend ostream& operator<<(ostream&, const ImageNG&);
-	friend ImageNG operator+(ImageNG&, int);
 	friend ImageNG operator+(int, ImageNG&);
-	friend ImageNG operator-(ImageNG&, int);
-	friend ImageNG operator-(int, ImageNG&);
-	friend ImageNG operator-(ImageNG&, ImageNG&);
 
 	private:
 		int 	id;
@@ -54,6 +50,9 @@ class ImageNG
 		void exportToFile(const char* fichier, const char* format);
 
 		ImageNG& operator=(const ImageNG&);
+		ImageNG operator+(int);
+		ImageNG operator-(int);
+		ImageNG operator-(ImageNG&);
 		ImageNG operator++();
 		ImageNG operator++(int);
 		ImageNG operator--();

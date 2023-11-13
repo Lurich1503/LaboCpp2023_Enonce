@@ -184,66 +184,6 @@ int ImageNG::getPixel(int x, int y) const
 	return matrice[x][y];
 }
 
-int ImageNG::getLuminance() const
-{
-	int moy=0,cpt=0;
-	for(int x=0; x < dimension.getLargeur(); x++)
-	{
-		for(int y=0; y < dimension.getHauteur(); y++)
-		{
-			moy += matrice[x][y];
-			cpt++;
-		}
-	}
-	return moy/cpt;
-}
-
-int ImageNG::getMinimum() const
-{
-	int min;
-	min = matrice[0][0];
-	for(int x=0; x < dimension.getLargeur(); x++)
-	{
-		for(int y=0; y < dimension.getHauteur(); y++)
-		{
-			if(matrice[x][y] < min)
-			{
-				min = matrice[x][y];
-			}
-		}
-	}
-	return min;
-}
-
-int ImageNG::getMaximum() const
-{
-	int max;
-	max = matrice[0][0];
-	for(int x=0; x < dimension.getLargeur(); x++)
-	{
-		for(int y=0; y < dimension.getHauteur(); y++)
-		{
-			if(matrice[x][y] > max)
-			{
-				max = matrice[x][y];
-			}
-		}
-	}
-	return max;
-}
-
-float ImageNG::getContraste() const
-{
-	int min,max;
-
-	min=getMinimum();
-	max=getMaximum();
-
-	float contraste;
-
-	contraste = (float)(max - min)/(max + min);
-	return contraste;
-}
 
 //----------------------------------------------
 //------------METHODE D'INSTANCE
@@ -320,6 +260,66 @@ void ImageNG::exportToFile(const char* fichier, const char* format)
 	MyQT::ExportToFile(*this, fichier, format);
 }
 
+int ImageNG::getLuminance() const
+{
+	int moy=0,cpt=0;
+	for(int x=0; x < dimension.getLargeur(); x++)
+	{
+		for(int y=0; y < dimension.getHauteur(); y++)
+		{
+			moy += matrice[x][y];
+			cpt++;
+		}
+	}
+	return moy/cpt;
+}
+
+int ImageNG::getMinimum() const
+{
+	int min;
+	min = matrice[0][0];
+	for(int x=0; x < dimension.getLargeur(); x++)
+	{
+		for(int y=0; y < dimension.getHauteur(); y++)
+		{
+			if(matrice[x][y] < min)
+			{
+				min = matrice[x][y];
+			}
+		}
+	}
+	return min;
+}
+
+int ImageNG::getMaximum() const
+{
+	int max;
+	max = matrice[0][0];
+	for(int x=0; x < dimension.getLargeur(); x++)
+	{
+		for(int y=0; y < dimension.getHauteur(); y++)
+		{
+			if(matrice[x][y] > max)
+			{
+				max = matrice[x][y];
+			}
+		}
+	}
+	return max;
+}
+
+float ImageNG::getContraste() const
+{
+	int min,max;
+
+	min=getMinimum();
+	max=getMaximum();
+
+	float contraste;
+
+	contraste = (float)(max - min)/(max + min);
+	return contraste;
+}
 
 //----------------------------------------------
 //----------SURCHARGE DES OPERATEURS
@@ -333,7 +333,6 @@ ImageNG& ImageNG::operator=(const ImageNG& p)
 
 	setId(p.getId());
 	setNom(p.getNom());
-	dimension = p.getDimension();
 
 	if(matrice)
 	{
@@ -344,6 +343,7 @@ ImageNG& ImageNG::operator=(const ImageNG& p)
 		delete[] matrice;
 	}
 
+	dimension = p.getDimension();
 	init_matrice();
 	for (int x=0; x<dimension.getLargeur(); x++)
 	{
@@ -362,17 +362,17 @@ ostream& operator<<(ostream& s, const ImageNG& p)
 	return s;
 }
 
-ImageNG operator+(ImageNG& p, int nb)
+ImageNG ImageNG::operator+(int nb)
 {
-	ImageNG img(p);
+	ImageNG img(*this);
 	
 	for (int x=0; x<img.dimension.getLargeur(); x++)
 	{
 		for(int y=0; y<img.dimension.getHauteur(); y++)
 		{
-			if((p.getPixel(x,y)+nb) <= 255)
+			if((img.getPixel(x,y)+nb) <= 255)
 			{
-				img.setPixel(x,y,p.getPixel(x,y)+nb);
+				img.setPixel(x,y,img.getPixel(x,y)+nb);
 			}
 			else
 			{
@@ -384,17 +384,17 @@ ImageNG operator+(ImageNG& p, int nb)
 	return img;
 }
 
-ImageNG operator-(ImageNG& p, int nb)
+ImageNG ImageNG::operator-(int nb)
 {
-	ImageNG img(p);
+	ImageNG img(*this);
 
 	for (int x=0; x<img.dimension.getLargeur(); x++)
 	{
 		for(int y=0; y<img.dimension.getHauteur(); y++)
 		{
-			if((p.getPixel(x,y)-nb) >= 0)
+			if((img.getPixel(x,y)-nb) >= 0)
 			{
-				img.setPixel(x,y,p.getPixel(x,y)-nb);
+				img.setPixel(x,y,img.getPixel(x,y)-nb);
 			}
 			else
 			{
@@ -409,11 +409,6 @@ ImageNG operator-(ImageNG& p, int nb)
 ImageNG operator+(int nb, ImageNG& p)
 {
 	return p+nb;
-}
-
-ImageNG operator-(int nb, ImageNG& p)
-{
-	return p-nb;
 }
 
 ImageNG ImageNG::operator++()
@@ -442,23 +437,24 @@ ImageNG ImageNG::operator--(int)
 	return img;
 }
 
-ImageNG operator-(ImageNG& im1, ImageNG& im2)
+ImageNG ImageNG::operator-(ImageNG& im2)
 {
-	for(int x=0; x<im1.dimension.getLargeur(); x++)
+	ImageNG img(*this);
+	for(int x=0; x<img.dimension.getLargeur(); x++)
 	{
-		for(int y=0; y<im1.dimension.getHauteur(); y++)
+		for(int y=0; y<img.dimension.getHauteur(); y++)
 		{
-			if(im1.getPixel(x,y)-im2.getPixel(x,y) >=0)
+			if(img.getPixel(x,y)-im2.getPixel(x,y) >=0)
 			{
-				im1.setPixel(x,y,im1.getPixel(x,y)-im2.getPixel(x,y));
+				img.setPixel(x,y,img.getPixel(x,y)-im2.getPixel(x,y));
 			}
 			else
 			{
-				im1.setPixel(x,y,0);
+				img.setPixel(x,y,0);
 			}
 		}
 	}	
-	return im1;
+	return img;
 }
 
 int ImageNG::operator<(const ImageNG& p)
@@ -478,24 +474,44 @@ int ImageNG::operator==(const ImageNG& p)
 
 int ImageNG::compImg(const ImageNG& p)
 {
-	 for (int x = 0; x < dimension.getLargeur(); x++) 
-	 {
-        for (int y = 0; y < dimension.getHauteur(); y++) 
-        {
-            if (matrice[x][y] < p.getPixel(x, y)) 
-            {
-                return -1;  // L'image actuelle est plus petite
-            } 
-            else 
-            {
-            	if (matrice[x][y] > p.getPixel(x, y)) 
-            	{
-                	return 1;   // L'image actuelle est plus grande
-            	}
-            }
-        }
-    }
-    return 0; // Les images sont égales
+	int cmpt,egal=0,petit=0,grand=0;
+
+	cmpt=dimension.getLargeur()*dimension.getHauteur();
+
+	for(int x=0; x<p.dimension.getLargeur(); x++)
+	{
+		for(int y=0; y<p.dimension.getHauteur(); y++)
+		{
+			if(matrice[x][y] == p.getPixel(x,y))
+			{
+				egal++;
+			}
+			else
+				if(matrice[x][y] < p.getPixel(x,y))
+				{
+					petit++;
+				}
+				else
+					if(matrice[x][y] > p.getPixel(x,y))
+					{
+						grand++;
+					}
+		}
+	}
+
+	if(cmpt == egal)
+	{
+		return 0;
+	}
+	if(cmpt == petit)
+	{
+		return -1;
+	}
+	if(cmpt == grand)
+	{
+		return 1;
+	}
+	return 2;
 }
 
 	

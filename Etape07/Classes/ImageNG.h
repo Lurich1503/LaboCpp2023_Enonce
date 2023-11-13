@@ -9,11 +9,7 @@ using namespace std;
 class ImageNG : public Image
 {
 	friend ostream& operator<<(ostream&, const ImageNG&);
-	friend ImageNG operator+(ImageNG&, int);
 	friend ImageNG operator+(int, ImageNG&);
-	friend ImageNG operator-(ImageNG&, int);
-	friend ImageNG operator-(int, ImageNG&);
-	friend ImageNG operator-(ImageNG&, ImageNG&);
 
 	private:
 		int** matrice;  
@@ -47,6 +43,9 @@ class ImageNG : public Image
 		void exportToFile(const char* fichier, const char* format);
 
 		ImageNG& operator=(const ImageNG&);
+		ImageNG operator+(int);
+		ImageNG operator-(int);
+		ImageNG operator-(ImageNG&);
 		ImageNG operator++();
 		ImageNG operator++(int);
 		ImageNG operator--();
