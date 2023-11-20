@@ -1,61 +1,61 @@
-#include "Exception.h"
+#include "RGBException.h"
 #include <string.h>
 
 //----------------------------------------------
 //---------------CONSTRUCTEURS
 //----------------------------------------------
-Exception::Exception(void)
+RGBException::RGBException(void) : Exception()
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur par defaut <<<" << endl;
-#endif
-	setErreur("???");
+	cout << ">>> RGBException : constructeur par defaut <<<" << endl;
+#endif	
+	setValeur(-1);
 }
 
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-Exception::Exception(const string m)
+RGBException::RGBException(int v, const char* m) : Exception(m)
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur d'initialisation <<<" << endl;
+	cout << ">>> RGBException : constructeur d'initialisation <<<" << endl;
 #endif
-	setErreur(m);
+	setValeur(v);
 }
 
 //----------------------------------------------
 //----------CONSTRUCTEURS DE COPIE
 //----------------------------------------------
-Exception::Exception(const Exception& e)
+RGBException::RGBException(const RGBException& e) : Exception(e)
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur de copie <<<" << endl;
+	cout << ">>> RGBException : constructeur de copie <<<" << endl;
 #endif
-	setErreur(e.getMessageErreur());
+	setValeur(e.getValeur());
 }
 
 //----------------------------------------------
 //----------------DESTRUCTEUR
 //----------------------------------------------
-Exception::~Exception()
+RGBException::~RGBException()
 {
 #ifdef DEBUG
-	cout << ">>> Exception : destructeur <<<" << endl;
+	cout << ">>> RGBException : destructeur <<<" << endl;
 #endif
 }
 
 //----------------------------------------------
 //------------------SETTERS
 //----------------------------------------------
-void Exception::setErreur(const string m)
+void RGBException::setValeur(int v)
 {
-	message = m;
+	valeur = v;
 }
 
 //----------------------------------------------
 //------------------GETTERS
 //----------------------------------------------
-const string Exception::getMessageErreur() const
+int RGBException::getValeur() const 
 {
-	return message;
+	return valeur;
 }

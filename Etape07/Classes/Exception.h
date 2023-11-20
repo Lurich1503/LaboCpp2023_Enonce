@@ -7,17 +7,17 @@ using namespace std;
 class Exception
 {
 	protected:
-		char message[100];
+		string message;
 	public:
 		Exception(void);
-		Exception(const char* m);
+		Exception(const string m);
 		Exception(const Exception& e);
 
 		virtual ~Exception();
 
-		void setErreur(const char* m);
+		void setErreur(const string m);
 
-		const char* getMessageErreur() const;
+		const string getMessageErreur() const;
 };
 
 #endif

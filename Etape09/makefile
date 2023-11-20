@@ -2,9 +2,9 @@
 CLASSES=./Classes/
 COMP=g++ -I $(CLASSES) -Wall -D DEBUG
 
-Test8: Test8.cpp $(CLASSES)MyQT.o $(CLASSES)Dimension.o $(CLASSES)ImageNG.o $(CLASSES)Image.o $(CLASSES)Couleur.o $(CLASSES)ImageRGB.o $(CLASSES)ImageB.o $(CLASSES)Exception.o $(CLASSES)RGBException.o $(CLASSES)XYException.o $(CLASSES)ArrayList.o $(CLASSES)ArrayListException.o $(CLASSES)Iterateur.o
-	echo Creation de Test8
-	$(COMP) Test8.cpp -o Test8 $(CLASSES)MyQT.o $(CLASSES)ImageNG.o $(CLASSES)Dimension.o $(CLASSES)Image.o $(CLASSES)Couleur.o $(CLASSES)ImageRGB.o $(CLASSES)ImageB.o $(CLASSES)Exception.o $(CLASSES)RGBException.o $(CLASSES)XYException.o $(CLASSES)ArrayList.o $(CLASSES)ArrayListException.o $(CLASSES)Iterateur.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I /usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so
+Test9: Test9.cpp $(CLASSES)MyQT.o $(CLASSES)Dimension.o $(CLASSES)ImageNG.o $(CLASSES)Image.o $(CLASSES)Couleur.o $(CLASSES)ImageRGB.o $(CLASSES)ImageB.o $(CLASSES)Exception.o $(CLASSES)RGBException.o $(CLASSES)XYException.o $(CLASSES)ArrayList.o $(CLASSES)ArrayListException.o $(CLASSES)Iterateur.o $(CLASSES)Traitements.o
+	echo Creation de Test9
+	$(COMP) Test9.cpp -o Test9 $(CLASSES)MyQT.o $(CLASSES)ImageNG.o $(CLASSES)Dimension.o $(CLASSES)Image.o $(CLASSES)Couleur.o $(CLASSES)ImageRGB.o $(CLASSES)ImageB.o $(CLASSES)Exception.o $(CLASSES)RGBException.o $(CLASSES)XYException.o $(CLASSES)ArrayList.o $(CLASSES)ArrayListException.o $(CLASSES)Iterateur.o $(CLASSES)Traitements.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I /usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so
 
 $(CLASSES)ImageNG.o:	$(CLASSES)ImageNG.cpp $(CLASSES)ImageNG.h
 	echo Creation de ImageNG.o
@@ -54,6 +54,10 @@ $(CLASSES)Iterateur.o:	$(CLASSES)Iterateur.cpp $(CLASSES)Iterateur.h
 	echo Creation de Iterateur.o
 	$(COMP) $(CLASSES)Iterateur.cpp -c -o $(CLASSES)Iterateur.o
 
+$(CLASSES)Traitements.o:	$(CLASSES)Traitements.cpp $(CLASSES)Traitements.h
+	echo Creation de Traitements.o
+	$(COMP) $(CLASSES)Traitements.cpp -c -o $(CLASSES)Traitements.o
+
 $(CLASSES)MyQT.o:	$(CLASSES)MyQT.cpp $(CLASSES)MyQT.h
 	echo Creation de MyQT.o
 	$(COMP) $(CLASSES)MyQT.cpp -c -o $(CLASSES)MyQT.o -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I /usr/lib64/qt5/mkspecs/linux-g++
@@ -62,5 +66,5 @@ clean:
 	rm -f $(CLASSES)*.o core
 
 clobber:	clean
-	echo Suppression de Test8
-	rm -f Test8
+	echo Suppression de Test9
+	rm -f Test9

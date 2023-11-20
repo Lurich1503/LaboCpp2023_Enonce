@@ -15,7 +15,7 @@ Exception::Exception(void)
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-Exception::Exception(const char* m)
+Exception::Exception(const string m)
 {
 #ifdef DEBUG
 	cout << ">>> Exception : constructeur d'initialisation <<<" << endl;
@@ -47,15 +47,15 @@ Exception::~Exception()
 //----------------------------------------------
 //------------------SETTERS
 //----------------------------------------------
-void Exception::setErreur(const char* m)
+void Exception::setErreur(const string m)
 {
-	strcpy(message, m);
+	message = m;
 }
 
 //----------------------------------------------
 //------------------GETTERS
 //----------------------------------------------
-const char* Exception::getMessageErreur() const
+const string Exception::getMessageErreur() const
 {
 	return message;
 }

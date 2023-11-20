@@ -104,7 +104,7 @@ void Essai1()
     cout << "On retire l'element d'indice 3 (17)  : " << liste.retireElement(3) << endl;
     liste.Affiche();
   }
-  catch(ARRAYLISTException m)
+  catch(const ARRAYLISTException& m)
   {
     cout << "Exception ARRAYLISTException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;

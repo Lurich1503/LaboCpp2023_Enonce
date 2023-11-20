@@ -1,61 +1,61 @@
-#include "Exception.h"
+#include "ArrayListException.h"
 #include <string.h>
 
 //----------------------------------------------
 //---------------CONSTRUCTEURS
 //----------------------------------------------
-Exception::Exception(void)
+ARRAYLISTException::ARRAYLISTException(void) : Exception()
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur par defaut <<<" << endl;
-#endif
-	setErreur("???");
+	cout << ">>> ARRAYLISTException : constructeur par defaut <<<" << endl;
+#endif	
+	setValeur(-1);
 }
 
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-Exception::Exception(const string m)
+ARRAYLISTException::ARRAYLISTException(int v, const char* m) : Exception(m)
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur d'initialisation <<<" << endl;
+	cout << ">>> ARRAYLISTException : constructeur d'initialisation <<<" << endl;
 #endif
-	setErreur(m);
+	setValeur(v);
 }
 
 //----------------------------------------------
 //----------CONSTRUCTEURS DE COPIE
 //----------------------------------------------
-Exception::Exception(const Exception& e)
+ARRAYLISTException::ARRAYLISTException(const ARRAYLISTException& e) : Exception(e)
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur de copie <<<" << endl;
+	cout << ">>> ARRAYLISTException : constructeur de copie <<<" << endl;
 #endif
-	setErreur(e.getMessageErreur());
+	setValeur(e.getValeur());
 }
 
 //----------------------------------------------
 //----------------DESTRUCTEUR
 //----------------------------------------------
-Exception::~Exception()
+ARRAYLISTException::~ARRAYLISTException()
 {
 #ifdef DEBUG
-	cout << ">>> Exception : destructeur <<<" << endl;
+	cout << ">>> ARRAYLISTException : destructeur <<<" << endl;
 #endif
 }
 
 //----------------------------------------------
 //------------------SETTERS
 //----------------------------------------------
-void Exception::setErreur(const string m)
+void ARRAYLISTException::setValeur(int v)
 {
-	message = m;
+	valeur = v;
 }
 
 //----------------------------------------------
 //------------------GETTERS
 //----------------------------------------------
-const string Exception::getMessageErreur() const
+int ARRAYLISTException::getValeur() const 
 {
-	return message;
+	return valeur;
 }

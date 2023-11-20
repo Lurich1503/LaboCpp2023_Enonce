@@ -3,6 +3,7 @@
 #include "MyQT.h"
 #include "RGBException.h"
 #include "XYException.h"
+#include <fstream>
 
 //----------------------------------------------
 //---------------CONSTRUCTEURS
@@ -177,6 +178,7 @@ int ImageNG::getPixel(int x, int y) const
 {
 	return matrice[x][y];
 }
+
 
 //----------------------------------------------
 //------------METHODE D'INSTANCE
@@ -489,7 +491,7 @@ int ImageNG::compImg(const ImageNG& p)
      }
 
 
-	int cmpt,egal=0,petit=0,grand=0;
+	 int cmpt,egal=0,petit=0,grand=0;
 
 	cmpt=dimension.getLargeur()*dimension.getHauteur();
 
@@ -528,4 +530,50 @@ int ImageNG::compImg(const ImageNG& p)
 	}
 
 	return 2;
+}
+
+//----------------------------------------------
+//------------------FLUX
+//----------------------------------------------
+void ImageNG::Save(ofstream & fichier) const
+{
+	Image::Save(fichier);
+
+	int taille_largeur = dimension.getLargeur();
+	fichier.write((char*)&taille_largeur, sizeof(int));
+	int taille_hauteur = dimension.getHauteur();
+	fichier.write((char*)&taille_hauteur, sizeof(int));
+
+	for(int x=0;x<dimension.getLargeur();x++)
+	{
+		for(int y=0;y<dimension.getHauteur();y++)
+		{
+			fichier.write((char*)&matrice[x][y],sizeof(int));
+		}
+	}
+}
+
+void ImageNG::Load(ifstream & fichier)
+{
+	Image::Load(fichier);
+
+	int taille_largeur;
+	fichier.read((char*)&taille_largeur, sizeof(int));
+	int taille_hauteur;
+	fichier.read((char*)&taille_hauteur, sizeof(int));
+
+	matrice = new int*[taille_largeur];
+	for (int x=0 ; x < taille_largeur ; x++) 
+		{
+			matrice[x] = new int[taille_hauteur];
+		}
+ 
+	for(int x=0; x < taille_largeur; x++)
+	{
+		for(int y=0; y < taille_hauteur; y++)
+		{
+			fichier.read((char*)&matrice[x][y],sizeof(int));
+		}
+	}
+
 }

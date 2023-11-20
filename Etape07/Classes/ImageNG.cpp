@@ -527,4 +527,6 @@ int ImageNG::compImg(const ImageNG& p)
 	{
 		return 1;
 	}
+
+	return 2;
 }

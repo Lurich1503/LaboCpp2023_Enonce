@@ -108,7 +108,7 @@ void Essai1()
     Couleur c1(r,v,b);
     cout << "Couleur creee = " << c1 << endl << endl;
   }
-  catch(RGBException m)
+  catch(const RGBException& m)
   {
     cout << "Exception RGBException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;
@@ -148,7 +148,7 @@ void Essai2()
     cin >> d1;
     cout << "Dimension saisie : " << d1 << endl;
   }
-  catch(XYException m)
+  catch(const XYException& m)
   {
     cout << "Exception XYException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;
@@ -187,13 +187,13 @@ void Essai3()
     cout << "y : "; cin >> y; cin.ignore();
     cout << "Valeur en (" << x << "," << y << ") = " << im.getPixel(x,y) << endl << endl;
   }
-  catch(RGBException m)
+  catch(const RGBException& m)
   {
     cout << "Exception RGBException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;
     cout << "valeur = " << m.getValeur() << endl;
   }
-  catch(XYException m)
+  catch(const XYException& m)
   {
     cout << "Exception XYException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;
@@ -252,7 +252,7 @@ void Essai4()
       cout << "Voici l'image resultat :" << endl << im << endl; im.Dessine();
     }
   }
-  catch(XYException m)
+  catch(const XYException& m)
   {
     cout << "Exception XYException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;
@@ -289,7 +289,7 @@ void Essai5()
     cout << "y : "; cin >> y; cin.ignore();
     cout << "Valeur en (" << x << "," << y << ") = " << im.getPixel(x,y) << endl << endl;
   }
-  catch(XYException m)
+  catch(const XYException& m)
   {
     cout << "Exception XYException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;
@@ -324,7 +324,7 @@ void Essai6()
     cout << "y : "; cin >> y; cin.ignore();
     cout << "Valeur en (" << x << "," << y << ") = " << im.getPixel(x,y) << endl << endl;
   }
-  catch(XYException m)
+  catch(const XYException& m)
   {
     cout << "Exception XYException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;

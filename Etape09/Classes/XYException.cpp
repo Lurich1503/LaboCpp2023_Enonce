@@ -1,61 +1,61 @@
-#include "Exception.h"
+#include "XYException.h"
 #include <string.h>
 
 //----------------------------------------------
 //---------------CONSTRUCTEURS
 //----------------------------------------------
-Exception::Exception(void)
+XYException::XYException(void) : Exception()
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur par defaut <<<" << endl;
-#endif
-	setErreur("???");
+	cout << ">>> XYException : constructeur par defaut <<<" << endl;
+#endif	
+	setCoordonnee(63);
 }
 
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-Exception::Exception(const string m)
+XYException::XYException(char c, const char* m) : Exception(m)
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur d'initialisation <<<" << endl;
+	cout << ">>> XYException : constructeur d'initialisation <<<" << endl;
 #endif
-	setErreur(m);
+	setCoordonnee(c);
 }
 
 //----------------------------------------------
 //----------CONSTRUCTEURS DE COPIE
 //----------------------------------------------
-Exception::Exception(const Exception& e)
+XYException::XYException(const XYException& e) : Exception(e)
 {
 #ifdef DEBUG
-	cout << ">>> Exception : constructeur de copie <<<" << endl;
+	cout << ">>> XYException : constructeur de copie <<<" << endl;
 #endif
-	setErreur(e.getMessageErreur());
+	setCoordonnee(e.getCoordonnee());
 }
 
 //----------------------------------------------
 //----------------DESTRUCTEUR
 //----------------------------------------------
-Exception::~Exception()
+XYException::~XYException()
 {
 #ifdef DEBUG
-	cout << ">>> Exception : destructeur <<<" << endl;
+	cout << ">>> XYException : destructeur <<<" << endl;
 #endif
 }
 
 //----------------------------------------------
 //------------------SETTERS
 //----------------------------------------------
-void Exception::setErreur(const string m)
+void XYException::setCoordonnee(char c)
 {
-	message = m;
+	coordonnee = c;
 }
 
 //----------------------------------------------
 //------------------GETTERS
 //----------------------------------------------
-const string Exception::getMessageErreur() const
+char XYException::getCoordonnee() const 
 {
-	return message;
+	return coordonnee;
 }
