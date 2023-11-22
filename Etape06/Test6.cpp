@@ -252,6 +252,12 @@ void Essai4()
       cout << "Voici l'image resultat :" << endl << im << endl; im.Dessine();
     }
   }
+  catch(const RGBException& m)
+  {
+    cout << "Exception RGBException catchee..." << endl;
+    cout << "message = " << m.getMessageErreur() << endl;
+    cout << "valeur = " << m.getValeur() << endl;
+  }
   catch(const XYException& m)
   {
     cout << "Exception XYException catchee..." << endl;

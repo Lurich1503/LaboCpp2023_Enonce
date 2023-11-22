@@ -371,7 +371,7 @@ ImageNG ImageNG::operator+(int nb)
 			}
 			else
 			{
-				img.setPixel(x,y,255);
+				throw RGBException(img.getPixel(x,y)+nb, "Niveau de gris invalide !");
 			}
 		}
 	}
@@ -393,7 +393,7 @@ ImageNG ImageNG::operator-(int nb)
 			}
 			else
 			{
-				img.setPixel(x,y,0);
+				throw RGBException(img.getPixel(x,y)-nb, "Niveau de gris invalide !");
 			}
 		}
 	}
@@ -446,7 +446,7 @@ ImageNG ImageNG::operator-(ImageNG& im2)
 			}
 			else
 			{
-				img.setPixel(x,y,0);
+				throw RGBException(img.getPixel(x,y)-im2.getPixel(x,y), "Niveau de gris invalide !");
 			}
 		}
 	}	

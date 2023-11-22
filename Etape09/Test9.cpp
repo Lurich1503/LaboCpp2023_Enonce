@@ -7,6 +7,7 @@
 #include "ImageNG.h"
 #include "ImageB.h"
 #include "Traitements.h"
+#include "Exception.h"
 
 using namespace std;
 
@@ -35,8 +36,8 @@ int main(int argc,char* argv[])
     switch(choix)
     {
       case 1 : Essai1(); break;
-      /*case 2 : Essai2(); break;
-      case 3 : Essai3(); break;
+      case 2 : Essai2(); break;
+      /*case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
       case 6 : Essai6(); break;
@@ -89,31 +90,39 @@ void Essai1()
 
   cout << "Voici l'image seuillee : " << imageSeuillee << endl; imageSeuillee.Dessine();
 }
-/*
+
 //*******************************************************************************************************
 void Essai2()
 {
-  cout << "***** 2. Test du filtre moyenneur sur une ImageNG ********************************************" << endl;
+  try
+  {
+    cout << "***** 2. Test du filtre moyenneur sur une ImageNG ********************************************" << endl;
 
-  ImageNG image("../images/lena.bmp");
-  image.setNom("lena");
-  cout << "Voici l'image de départ : " << image << endl; image.Dessine();
+    ImageNG image("../images/lena.bmp");
+    image.setNom("lena");
+    cout << "Voici l'image de départ : " << image << endl; image.Dessine();
 
-  ImageNG imageFiltree;
-  imageFiltree = Traitements::FiltreMoyenneur(image,3);
+    ImageNG imageFiltree;
+    imageFiltree = Traitements::FiltreMoyenneur(image,3);
 
-  cout << "Voici l'image filtree : " << imageFiltree << endl; imageFiltree.Dessine();
+    cout << "Voici l'image filtree : " << imageFiltree << endl; imageFiltree.Dessine();
 
-  ImageNG image2("../images/mandrill.bmp");
-  image2.setNom("mandrill");
-  cout << "Voici l'image de départ : " << image << endl; image2.Dessine();
+    ImageNG image2("../images/mandrill.bmp");
+    image2.setNom("mandrill");
+    cout << "Voici l'image de départ : " << image << endl; image2.Dessine();
 
-  ImageNG imageFiltree2;
-  imageFiltree2 = Traitements::FiltreMoyenneur(image2,11);
+    ImageNG imageFiltree2;
+    imageFiltree2 = Traitements::FiltreMoyenneur(image2,11);
 
-  cout << "Voici l'image filtree : " << imageFiltree2 << endl; imageFiltree2.Dessine();
+    cout << "Voici l'image filtree : " << imageFiltree2 << endl; imageFiltree2.Dessine();
+  }
+  catch(const Exception& m)
+  {
+    cout << "Exception Exception catchee..." << endl;
+    cout << "message = " << m.getMessageErreur() << endl;
+  }
 }
-
+/*
 //*******************************************************************************************************
 void Essai3()
 {
