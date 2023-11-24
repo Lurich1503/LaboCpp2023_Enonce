@@ -2,9 +2,9 @@
 CLASSES=./Classes/
 COMP=g++ -I $(CLASSES) -Wall -D DEBUG
 
-Test9: Test9.cpp $(CLASSES)MyQT.o $(CLASSES)Dimension.o $(CLASSES)ImageNG.o $(CLASSES)Image.o $(CLASSES)Couleur.o $(CLASSES)ImageRGB.o $(CLASSES)ImageB.o $(CLASSES)Exception.o $(CLASSES)RGBException.o $(CLASSES)XYException.o $(CLASSES)ArrayList.o $(CLASSES)ArrayListException.o $(CLASSES)Iterateur.o $(CLASSES)Traitements.o
+Test9: Test9.cpp $(CLASSES)MyQT.o $(CLASSES)Dimension.o $(CLASSES)ImageNG.o $(CLASSES)Image.o $(CLASSES)Couleur.o $(CLASSES)ImageRGB.o $(CLASSES)ImageB.o $(CLASSES)Exception.o $(CLASSES)RGBException.o $(CLASSES)XYException.o $(CLASSES)ArrayList.o $(CLASSES)SortedArrayList.o $(CLASSES)ArrayListException.o $(CLASSES)Iterateur.o $(CLASSES)Traitements.o
 	echo Creation de Test9
-	$(COMP) Test9.cpp -o Test9 $(CLASSES)MyQT.o $(CLASSES)ImageNG.o $(CLASSES)Dimension.o $(CLASSES)Image.o $(CLASSES)Couleur.o $(CLASSES)ImageRGB.o $(CLASSES)ImageB.o $(CLASSES)Exception.o $(CLASSES)RGBException.o $(CLASSES)XYException.o $(CLASSES)ArrayList.o $(CLASSES)ArrayListException.o $(CLASSES)Iterateur.o $(CLASSES)Traitements.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I /usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so
+	$(COMP) Test9.cpp -o Test9 $(CLASSES)MyQT.o $(CLASSES)ImageNG.o $(CLASSES)Dimension.o $(CLASSES)Image.o $(CLASSES)Couleur.o $(CLASSES)ImageRGB.o $(CLASSES)ImageB.o $(CLASSES)Exception.o $(CLASSES)RGBException.o $(CLASSES)XYException.o $(CLASSES)ArrayList.o $(CLASSES)SortedArrayList.o $(CLASSES)ArrayListException.o $(CLASSES)Iterateur.o $(CLASSES)Traitements.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I /usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so
 
 $(CLASSES)ImageNG.o:	$(CLASSES)ImageNG.cpp $(CLASSES)ImageNG.h
 	echo Creation de ImageNG.o
@@ -45,6 +45,10 @@ $(CLASSES)XYException.o:	$(CLASSES)XYException.cpp $(CLASSES)XYException.h
 $(CLASSES)ArrayList.o:	$(CLASSES)ArrayList.cpp $(CLASSES)ArrayList.h
 	echo Creation de ArrayList.o
 	$(COMP) $(CLASSES)ArrayList.cpp -c -o $(CLASSES)ArrayList.o
+
+$(CLASSES)SortedArrayList.o:	$(CLASSES)SortedArrayList.cpp $(CLASSES)SortedArrayList.h
+	echo Creation de SortedArrayList.o
+	$(COMP) $(CLASSES)SortedArrayList.cpp -c -o $(CLASSES)SortedArrayList.o
 
 $(CLASSES)ArrayListException.o:	$(CLASSES)ArrayListException.cpp $(CLASSES)ArrayListException.h
 	echo Creation de ArrayListException.o

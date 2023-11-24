@@ -15,7 +15,7 @@ template<class T> class Iterateur; //classe declaree mais pas encore definie
 
 template<class T> class ArrayList
 {
-	private:
+	protected:
 		Cellule<T> *pTete;
 
 	public: 
@@ -29,9 +29,9 @@ template<class T> class ArrayList
 
 		void Affiche() const;
 
-		void insereElement(const T & val);
+		virtual void insereElement(const T & val);
 
-		T& getElement(int ind) const;
+		virtual T& getElement(int ind) const;
 
 		T retireElement(int ind);
 

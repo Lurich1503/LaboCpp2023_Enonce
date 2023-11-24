@@ -37,11 +37,11 @@ int main(int argc,char* argv[])
     {
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
-      /*case 3 : Essai3(); break;
+      case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
       case 6 : Essai6(); break;
-      case 7 : Essai7(); break;*/
+      case 7 : Essai7(); break;
       default : fini = true ; break;
     }
   }
@@ -122,26 +122,35 @@ void Essai2()
     cout << "message = " << m.getMessageErreur() << endl;
   }
 }
-/*
+
 //*******************************************************************************************************
 void Essai3()
 {
-  cout << "***** 3. Test du filtre median sur une ImageNG ********************************************" << endl;
+  try
+  {
+      cout << "***** 3. Test du filtre median sur une ImageNG ********************************************" << endl;
 
-  ImageNG image("../images/house.bmp");
-  image.setNom("house");
-  cout << "Voici l'image de départ : " << image << endl; image.Dessine();
+      ImageNG image("../images/house.bmp");
+      image.setNom("house");
+      cout << "Voici l'image de départ : " << image << endl; image.Dessine();
 
-  int taille;
-  cout << "Taille du filtre = ";
-  cin >> taille;
-  cin.ignore();
+      int taille;
+      cout << "Taille du filtre = ";
+      cin >> taille;
+      cin.ignore();
 
-  ImageNG imageFiltree;
-  imageFiltree = Traitements::FiltreMedian(image,taille);
+      ImageNG imageFiltree;
+      imageFiltree = Traitements::FiltreMedian(image,taille);
 
-  cout << "Voici l'image filtree : " << imageFiltree << endl; imageFiltree.Dessine();
+      cout << "Voici l'image filtree : " << imageFiltree << endl; imageFiltree.Dessine();
+  }
+  catch(const Exception& m)
+  {
+    cout << "Exception Exception catchee..." << endl;
+    cout << "message = " << m.getMessageErreur() << endl;
+  }
 }
+
 
 //*******************************************************************************************************
 void Essai4()
@@ -213,4 +222,4 @@ void Essai7()
 
   cout << "Voici l'image negatif : " << negatif << endl; negatif.Dessine();
 }
-*/
+

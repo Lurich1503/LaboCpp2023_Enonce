@@ -432,7 +432,7 @@ ImageNG ImageNG::operator--(int)
 	return img;
 }
 
-ImageNG ImageNG::operator-(ImageNG& im2)
+ImageNG ImageNG::operator-(const ImageNG& im2)
 {
 	ImageNG img(*this);
 	for(int x=0; x<img.dimension.getLargeur(); x++)

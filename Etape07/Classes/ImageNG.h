@@ -45,7 +45,7 @@ class ImageNG : public Image
 		ImageNG& operator=(const ImageNG&);
 		ImageNG operator+(int);
 		ImageNG operator-(int);
-		ImageNG operator-(ImageNG&);
+		ImageNG operator-(const ImageNG&);
 		ImageNG operator++();
 		ImageNG operator++(int);
 		ImageNG operator--();
