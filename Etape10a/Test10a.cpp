@@ -67,7 +67,7 @@ int main(int argc,char* argv[])
 
   cout << endl << "//***** Apres suppression par id (4) *********************************" << endl;
   ps.supprimeImageParId(4);
-  ps.afficheImages();  
+  ps.afficheImages(); 
   
   return 0;
 }
