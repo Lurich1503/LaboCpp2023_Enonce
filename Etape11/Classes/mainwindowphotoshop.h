@@ -5,11 +5,11 @@
 #include <string>
 using namespace std;
 
-/*
+
 #include "ImageNG.h"
 #include "ImageRGB.h"
 #include "ImageB.h"
-*/
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindowPhotoShop; }
@@ -28,11 +28,11 @@ public:
     void   setNomImage(string nom);
     string getNomImage() const;
     void   setParametresImageNG(int max=-1,int min=-1,int luminance=-1,float contraste=0.0f);
-    /*
+    
     void setImageNG(string destination,const ImageNG* imageng=NULL);
     void setImageRGB(string destination,const ImageRGB* imagergb=NULL);
     void setImageB(string destination,const ImageB* imageb=NULL);
-    */
+    
     void setResultatBoolean(int valeur=-1);
 
     // Table des images

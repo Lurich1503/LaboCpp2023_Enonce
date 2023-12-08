@@ -9,7 +9,7 @@
 #include <QPixmap>
 #include <QColorDialog>
 
-/*
+
 #include "ImageNG.h"
 #include "ImageRGB.h"
 #include "ImageB.h"
@@ -17,7 +17,7 @@
 #include "Iterateur.h"
 #include "Traitements.h"
 #include "XYException.h"
-*/
+
 
 MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindowPhotoShop)
 {
@@ -47,12 +47,12 @@ MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),
     ui->tableWidgetImages->horizontalHeader()->setStyleSheet("background-color: lightyellow");
 
     // Intialisation des scrollArea
-    /*
+    
     setImageNG("selection");
     setImageNG("operande1");
     setImageNG("operande2");
     setImageNG("resultat");
-    */
+  
 
     // ComboBox des traitements disponibles
     ajouteTraitementDisponible("Eclaircir (+ val)");
@@ -126,7 +126,7 @@ void MainWindowPhotoShop::setParametresImageNG(int max,int min,int luminance,flo
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+
 void MainWindowPhotoShop::setImageNG(string destination,const ImageNG* imageng)
 {
     QPixmap * pixmap = NULL;
@@ -155,9 +155,9 @@ void MainWindowPhotoShop::setImageNG(string destination,const ImageNG* imageng)
     if (destination == "operande2") ui->scrollAreaOperande2->setWidget(label);
     if (destination == "resultat") ui->scrollAreaResultat->setWidget(label);
 }
-*/
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+
 void MainWindowPhotoShop::setImageRGB(string destination,const ImageRGB* imagergb)
 {
     QPixmap * pixmap = NULL;
@@ -186,9 +186,9 @@ void MainWindowPhotoShop::setImageRGB(string destination,const ImageRGB* imagerg
     if (destination == "operande2") ui->scrollAreaOperande2->setWidget(label);
     if (destination == "resultat") ui->scrollAreaResultat->setWidget(label);
 }
-*/
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+
 void MainWindowPhotoShop::setImageB(string destination,const ImageB* imageb)
 {
     QPixmap * pixmap = NULL;
@@ -218,7 +218,7 @@ void MainWindowPhotoShop::setImageB(string destination,const ImageB* imageb)
     if (destination == "operande2") ui->scrollAreaOperande2->setWidget(label);
     if (destination == "resultat") ui->scrollAreaResultat->setWidget(label);
 }
-*/
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::setResultatBoolean(int val)
 {
@@ -406,6 +406,18 @@ void MainWindowPhotoShop::on_actionQuitter_triggered()
 void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
 {
   // Etape 11 (TO DO)
+  string NomFichier;
+  char nom[200];
+
+  NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageNB :");
+
+  ImageNG* instance;
+
+  strcpy(nom, NomFichier.c_str());
+  instance = new ImageNG(nom);
+
+  instance->importFromFile(NomFichier.c_str());
+  PhotoShop::getInstance().ajouteImage(instance);
 
 }
 
