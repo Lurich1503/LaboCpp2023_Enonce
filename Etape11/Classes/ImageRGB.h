@@ -17,17 +17,17 @@ class ImageRGB : public Image
 
 	public:
 		ImageRGB(void);
-		ImageRGB(int i,const string *n);
-		ImageRGB(int i,const string *n,const Dimension& d);
+		ImageRGB(int i,const string n);
+		ImageRGB(int i,const string n,const Dimension& d);
 		ImageRGB(const ImageRGB& p);
-		ImageRGB(const string *n);
+		ImageRGB(const string n);
 
 		~ImageRGB();
 
 		void Affiche() const;
 		void Dessine();
-		void importFromFile(const char* fichier);
-		void exportToFile(const char* fichier, const char* format);
+		void importFromFile(const string fichier);
+		void exportToFile(const string fichier, const string format);
 
 		void setBackground(const Couleur& valeur);
 		void setPixel(int x, int y, const Couleur& valeur);

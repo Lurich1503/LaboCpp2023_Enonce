@@ -82,7 +82,7 @@ void Image::setId(int i)
 
 void Image::setNom(const string n)
 {
-	strcpy (nom, n);
+	nom = n;
 }
 
 void Image::setDimension(const Dimension& d)
@@ -116,9 +116,9 @@ Dimension Image::getDimension() const
 void Image::Save(ofstream &fichier) const
 {
 	fichier.write((char*)&id, sizeof(int));
-	int taille = strlen(nom);
+	int taille = nom.length();
 	fichier.write((char*)&taille, sizeof(int));
-	fichier.write(nom,taille * sizeof(char));
+	fichier.write(nom.c_str(),taille * sizeof(char));
 	dimension.Save(fichier);
 }
 
@@ -128,7 +128,7 @@ void Image::Load(ifstream & fichier)
 	int taille;
 	fichier.read((char*)&taille, sizeof(int));
 	nom = new char[taille + 1];
-	fichier.read(nom, taille * sizeof(char));
+	fichier.read(&nom[0], taille * sizeof(char));
 	nom[taille] = '\0';
 	dimension.Load(fichier);
 }

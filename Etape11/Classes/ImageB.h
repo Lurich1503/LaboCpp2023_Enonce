@@ -34,7 +34,7 @@ class ImageB : public Image
 
 		bool getPixel(int x, int y)const;
 
-		void exportToFile(const char* fichier, const char* format);
+		void exportToFile(const string fichier, const string format);
 
 		ImageB& operator=(const ImageB&);
 

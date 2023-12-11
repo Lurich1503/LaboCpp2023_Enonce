@@ -30,7 +30,7 @@ class Image
 
 		virtual void Affiche() const = 0;
 		virtual void Dessine() = 0;
-		virtual void exportToFile(const char* fichier, const char* format) = 0;
+		virtual void exportToFile(const string fichier, const string format) = 0;
 
 		void Save(ofstream & fichier) const;
 		void Load(ifstream & fichier);

@@ -10,12 +10,12 @@
 //----------------------------------------------
 ImageB Traitements::Seuillage(const ImageNG& imageIn, int seuil)
 {
-	char nom[100],nombre[4];
+	string nom,nombre;
 
-	strcpy(nom, imageIn.getNom());
-	strcat(nom,"-Seuil");
-	sprintf(nombre, "%d", seuil);
-	strcat(nom,nombre);
+	nom = imageIn.getNom();
+	nom += "-Seuil";
+	nombre = to_string(seuil);
+	nom += nombre;
 	Dimension d = imageIn.getDimension();
 
 	ImageB ImageOut(1,nom,d);
@@ -41,7 +41,7 @@ ImageB Traitements::Seuillage(const ImageNG& imageIn, int seuil)
 
 ImageNG Traitements::FiltreMoyenneur(const ImageNG& imageIn, int taille)
 {
-	char nom[100],nombre[4];
+	string nom,nombre;
 	int i, j, moy, diff;
 
 	if (taille % 2 == 0) 
@@ -49,10 +49,10 @@ ImageNG Traitements::FiltreMoyenneur(const ImageNG& imageIn, int taille)
         throw Exception("La taille du filtre doit toujours etre un nombre impair !");
      }
 
-	strcpy(nom, imageIn.getNom());
-	strcat(nom,"-moyenne");
-	sprintf(nombre, "%d", taille);
-	strcat(nom,nombre);
+	nom = imageIn.getNom();
+	nom += "-moyenne";
+	nombre = to_string(taille);
+	nom += nombre;
 	Dimension d = imageIn.getDimension();
 
 	ImageNG ImageOut(1,nom,d);
@@ -85,7 +85,7 @@ ImageNG Traitements::FiltreMoyenneur(const ImageNG& imageIn, int taille)
 
 ImageNG Traitements::FiltreMedian(const ImageNG& imageIn, int taille)
 {
-	char nom[100],nombre[4];
+	string nom,nombre;
 	int i, j, diff, mediane, indice;
 
 	if (taille % 2 == 0) 
@@ -93,10 +93,10 @@ ImageNG Traitements::FiltreMedian(const ImageNG& imageIn, int taille)
         throw Exception("La taille du filtre doit toujours etre un nombre impair !");
      }
 
-    strcpy(nom, imageIn.getNom());
-	strcat(nom,"-median");
-	sprintf(nombre, "%d", taille);
-	strcat(nom,nombre);
+    nom = imageIn.getNom();
+	nom += "-median";
+	nombre = to_string(taille);
+	nom += nombre;
 	Dimension d = imageIn.getDimension();
 
 	ImageNG ImageOut(1,nom,d);
@@ -135,7 +135,7 @@ ImageNG Traitements::FiltreMedian(const ImageNG& imageIn, int taille)
 
 ImageNG Traitements::Erosion(const ImageNG& imageIn, int taille)
 {
-	char nom[100],nombre[4];
+	string nom,nombre;
 	int i, j, diff, min;
 
 	if (taille % 2 == 0) 
@@ -143,10 +143,10 @@ ImageNG Traitements::Erosion(const ImageNG& imageIn, int taille)
         throw Exception("La taille du filtre doit toujours etre un nombre impair !");
      }
 
-    strcpy(nom, imageIn.getNom());
-	strcat(nom,"-erode");
-	sprintf(nombre, "%d", taille);
-	strcat(nom,nombre);
+    nom = imageIn.getNom();
+	nom += "-erode";
+	nombre = to_string(taille);
+	nom += nombre;
 	Dimension d = imageIn.getDimension();
 
 	ImageNG ImageOut(1,nom,d);
@@ -184,7 +184,7 @@ ImageNG Traitements::Erosion(const ImageNG& imageIn, int taille)
 
 ImageNG Traitements::Dilatation(const ImageNG& imageIn, int taille)
 {
-	char nom[100],nombre[4];
+	string nom,nombre;
 	int i, j, diff, max, dernier_val_liste;
 
 	if (taille % 2 == 0) 
@@ -192,10 +192,10 @@ ImageNG Traitements::Dilatation(const ImageNG& imageIn, int taille)
         throw Exception("La taille du filtre doit toujours etre un nombre impair !");
      }
 
-    strcpy(nom, imageIn.getNom());
-	strcat(nom,"-dilate");
-	sprintf(nombre, "%d", taille);
-	strcat(nom,nombre);
+    nom = imageIn.getNom();
+	nom += "-dilate";
+	nombre = to_string(taille);
+	nom += nombre;
 	Dimension d = imageIn.getDimension();
 
 	ImageNG ImageOut(1,nom,d);
@@ -235,10 +235,10 @@ ImageNG Traitements::Dilatation(const ImageNG& imageIn, int taille)
 
 ImageNG Traitements::Negatif(const ImageNG& imageIn)
 {
-	char nom[100];
+	string nom;
 
-    strcpy(nom, imageIn.getNom());
-	strcat(nom,"-negatif");
+    nom = imageIn.getNom();
+	nom += "-negatif";
 	Dimension d = imageIn.getDimension();
 
 	ImageNG ImageOut(1,nom,d);

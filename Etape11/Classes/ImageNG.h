@@ -39,8 +39,8 @@ class ImageNG : public Image
 	
 		void Affiche() const;
 		void Dessine();
-		void importFromFile(const char* fichier);
-		void exportToFile(const char* fichier, const char* format);
+		void importFromFile(const string fichier);
+		void exportToFile(const string fichier, const string format);
 
 		ImageNG& operator=(const ImageNG&);
 		ImageNG operator+(int);

@@ -187,7 +187,7 @@ int ImageNG::getPixel(int x, int y) const
 void ImageNG::Affiche() const
 {
 	cout << "[ImageNG : nom=";
-	if (nom) cout << getNom();
+	if (!nom.empty()) cout << getNom();
 	else cout << "???";
 	cout << " id =" << getId() << "]" << endl;
 	dimension.Affiche();
@@ -245,14 +245,14 @@ void ImageNG::Dessine()
 	MyQT::ViewImage(*this);
 }
 
-void ImageNG::importFromFile(const char* fichier)
+void ImageNG::importFromFile(const string fichier)
 {
-	MyQT::ImportFromFile(*this, fichier);
+	MyQT::ImportFromFile(*this, fichier.c_str());
 }
 
-void ImageNG::exportToFile(const char* fichier, const char* format)
+void ImageNG::exportToFile(const string fichier, const string format)
 {
-	MyQT::ExportToFile(*this, fichier, format);
+	MyQT::ExportToFile(*this, fichier.c_str(), format.c_str());
 }
 
 int ImageNG::getLuminance() const

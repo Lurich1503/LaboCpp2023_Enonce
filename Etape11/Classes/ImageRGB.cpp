@@ -166,7 +166,7 @@ Couleur ImageRGB::getPixel(int x, int y) const
 void ImageRGB::Affiche() const
 {
 	cout << "[ImageRGB : nom=";
-	if (nom) cout << getNom();
+	if (!nom.empty()) cout << getNom();
 	else cout << "???";
 	cout << " id =" << getId() << "]" << endl;
 	dimension.Affiche();
@@ -189,14 +189,14 @@ void ImageRGB::Dessine()
 	MyQT::ViewImage(*this);
 }
 
-void ImageRGB::importFromFile(const char* fichier)
+void ImageRGB::importFromFile(const string fichier)
 {
-	MyQT::ImportFromFile(*this, fichier);
+	MyQT::ImportFromFile(*this, fichier.c_str());
 }
 
-void ImageRGB::exportToFile(const char* fichier, const char* format)
+void ImageRGB::exportToFile(const string fichier, const string format)
 {
-	MyQT::ExportToFile(*this, fichier, format);
+	MyQT::ExportToFile(*this, fichier.c_str(), format.c_str());
 }
 
 //----------------------------------------------

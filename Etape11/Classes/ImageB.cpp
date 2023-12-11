@@ -156,7 +156,7 @@ bool ImageB::getPixel(int x, int y) const
 void ImageB::Affiche() const
 {
 	cout << "[ImageB : nom=";
-	if (nom) cout << getNom();
+	if (!nom.empty()) cout << getNom();
 	else cout << "???";
 	cout << " id =" << getId() << "]" << endl;
 	dimension.Affiche();
@@ -178,9 +178,9 @@ void ImageB::Dessine()
 	MyQT::ViewImage(*this);
 }
 
-void ImageB::exportToFile(const char* fichier, const char* format)
+void ImageB::exportToFile(const string fichier, const string format)
 {
-	MyQT::ExportToFile(*this, fichier, format);
+	MyQT::ExportToFile(*this, fichier.c_str(), format.c_str());
 }
 
 //----------------------------------------------
