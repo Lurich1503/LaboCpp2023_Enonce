@@ -15,7 +15,7 @@ RGBException::RGBException(void) : Exception()
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-RGBException::RGBException(int v, const char* m) : Exception(m)
+RGBException::RGBException(int v, const string m) : Exception(m)
 {
 #ifdef DEBUG
 	cout << ">>> RGBException : constructeur d'initialisation <<<" << endl;

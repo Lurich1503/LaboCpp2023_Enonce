@@ -9,23 +9,23 @@ class Image
 {
 	protected:
 		int 	id;
-		char	*nom;
+		string 	nom;
 		Dimension dimension;
 	public:
 		Image(void);
-		Image(int i,const char *n);
-		Image(int i,const char *n,const Dimension& d);
+		Image(int i,const string n);
+		Image(int i,const string n,const Dimension& d);
 		Image(const Image& p);
-		Image(const char *n);
+		Image(const string n);
 		
 		virtual ~Image();
 
 		void setId(int i);
-		void setNom(const char *n);
+		void setNom(const string n);
 		virtual void setDimension(const Dimension& d);
 
 		int getId() const;
-		const char * getNom() const;
+		const string getNom() const;
 		Dimension getDimension() const;
 
 		virtual void Affiche() const = 0;

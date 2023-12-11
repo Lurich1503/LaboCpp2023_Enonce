@@ -30,6 +30,8 @@ class PhotoShop
 		Image* getImageParIndice(int indice);
 		Image* getImageParId(int id);
 
+		ArrayList<Image*> getArraylist()const;
+
 		void supprimeImageParIndice(int ind);
 		void supprimeImageParId(int id);
 

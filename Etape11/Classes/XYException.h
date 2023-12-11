@@ -11,7 +11,7 @@ class XYException : public Exception
 		char coordonnee;
 	public:
 		XYException(void);
-		XYException(char c, const char* m);
+		XYException(char c, const string m);
 		XYException(const XYException& e);
 
 		~XYException();

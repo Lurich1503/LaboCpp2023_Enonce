@@ -15,7 +15,7 @@ ARRAYLISTException::ARRAYLISTException(void) : Exception()
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-ARRAYLISTException::ARRAYLISTException(int v, const char* m) : Exception(m)
+ARRAYLISTException::ARRAYLISTException(int v, const string m) : Exception(m)
 {
 #ifdef DEBUG
 	cout << ">>> ARRAYLISTException : constructeur d'initialisation <<<" << endl;

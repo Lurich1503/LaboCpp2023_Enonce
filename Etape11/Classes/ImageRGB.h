@@ -17,10 +17,10 @@ class ImageRGB : public Image
 
 	public:
 		ImageRGB(void);
-		ImageRGB(int i,const char *n);
-		ImageRGB(int i,const char *n,const Dimension& d);
+		ImageRGB(int i,const string *n);
+		ImageRGB(int i,const string *n,const Dimension& d);
 		ImageRGB(const ImageRGB& p);
-		ImageRGB(const char *n);
+		ImageRGB(const string *n);
 
 		~ImageRGB();
 

@@ -11,7 +11,7 @@ class RGBException : public Exception
 		int valeur;
 	public:
 		RGBException(void);
-		RGBException(int v, const char* m);
+		RGBException(int v, const string m);
 		RGBException(const RGBException& e);
 
 		~RGBException();

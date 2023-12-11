@@ -15,7 +15,7 @@ XYException::XYException(void) : Exception()
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-XYException::XYException(char c, const char* m) : Exception(m)
+XYException::XYException(char c, const string m) : Exception(m)
 {
 #ifdef DEBUG
 	cout << ">>> XYException : constructeur d'initialisation <<<" << endl;

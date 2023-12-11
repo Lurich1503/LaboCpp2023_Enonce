@@ -20,7 +20,7 @@ ImageRGB::ImageRGB(void) : Image()
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-ImageRGB::ImageRGB(int i,const char *n) : Image(i,n)
+ImageRGB::ImageRGB(int i,const string n) : Image(i,n)
 {
 #ifdef DEBUG
 	cout << ">>> ImageRGB : constructeur d'initialisation <<<" << endl;
@@ -30,7 +30,7 @@ ImageRGB::ImageRGB(int i,const char *n) : Image(i,n)
 	init_matrice(); 
 }
 
-ImageRGB::ImageRGB(int i,const char *n, const Dimension& d) : Image(i,n,d)
+ImageRGB::ImageRGB(int i,const string n, const Dimension& d) : Image(i,n,d)
 {
 #ifdef DEBUG
 	cout << ">>> ImageRGB : constructeur d'initialisation avec dimension <<<" << endl;
@@ -61,7 +61,7 @@ ImageRGB::ImageRGB(const ImageRGB& p) : Image(p)
 	}
 }
 
-ImageRGB::ImageRGB(const char *n) : Image(n)
+ImageRGB::ImageRGB(const string n) : Image(n)
 {
 #ifdef DEBUG
 	cout << ">>> ImageRGB : constructeur de copie d'importation de fichier" << endl;

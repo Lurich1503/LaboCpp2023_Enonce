@@ -17,6 +17,7 @@
 #include "Iterateur.h"
 #include "Traitements.h"
 #include "XYException.h"
+#include "ArrayList.h"
 
 
 MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindowPhotoShop)
@@ -418,6 +419,15 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
 
   instance->importFromFile(NomFichier.c_str());
   PhotoShop::getInstance().ajouteImage(instance);
+
+  videTableImages();
+
+  Iterateur<Image*> it(PhotoShop::getInstance().getArraylist());
+  
+  for(it.reset(); !it.end(); it++)
+  {
+    /*ajouteTupleTableImages((&it)->getId(), (&it)->get)*/
+  }
 
 }
 

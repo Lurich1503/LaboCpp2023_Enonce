@@ -23,7 +23,7 @@ ImageB::ImageB(void) : Image()
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-ImageB::ImageB(int i,const char *n) : Image(i,n)
+ImageB::ImageB(int i,const string n) : Image(i,n)
 {
 #ifdef DEBUG
 	cout << ">>> ImageB : constructeur d'initialisation <<<" << endl;
@@ -33,7 +33,7 @@ ImageB::ImageB(int i,const char *n) : Image(i,n)
 	init_matrice(); 
 }
 
-ImageB::ImageB(int i,const char *n, const Dimension& d) : Image(i,n,d)
+ImageB::ImageB(int i,const string n, const Dimension& d) : Image(i,n,d)
 {
 #ifdef DEBUG
 	cout << ">>> ImageB : constructeur d'initialisation avec dimension <<<" << endl;

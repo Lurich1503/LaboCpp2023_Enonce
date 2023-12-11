@@ -21,7 +21,7 @@ ImageNG::ImageNG(void) : Image()
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-ImageNG::ImageNG(int i,const char *n) : Image(i,n)
+ImageNG::ImageNG(int i,const string n) : Image(i,n)
 {
 #ifdef DEBUG
 	cout << ">>> ImageNG : constructeur d'initialisation <<<" << endl;
@@ -31,7 +31,7 @@ ImageNG::ImageNG(int i,const char *n) : Image(i,n)
 	init_matrice(); 
 }
 
-ImageNG::ImageNG(int i,const char *n, const Dimension& d) : Image(i,n,d)
+ImageNG::ImageNG(int i,const string n, const Dimension& d) : Image(i,n,d)
 {
 #ifdef DEBUG
 	cout << ">>> ImageNG : constructeur d'initialisation avec dimension <<<" << endl;
@@ -62,7 +62,7 @@ ImageNG::ImageNG(const ImageNG& p) : Image(p)
 	}
 }
 
-ImageNG::ImageNG(const char *n) : Image(n)
+ImageNG::ImageNG(const string n) : Image(n)
 {
 #ifdef DEBUG
 	cout << ">>> ImageNG : constructeur de copie d'importation de fichier" << endl;

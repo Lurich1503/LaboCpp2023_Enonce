@@ -19,10 +19,10 @@ class ImageNG : public Image
 
 	public:
 		ImageNG(void);
-		ImageNG(int i,const char *n);
-		ImageNG(int i,const char *n,const Dimension& d);
+		ImageNG(int i,const string n);
+		ImageNG(int i,const string n,const Dimension& d);
 		ImageNG(const ImageNG& p);
-		ImageNG(const char *n);
+		ImageNG(const string n);
 		
 
 		~ImageNG();

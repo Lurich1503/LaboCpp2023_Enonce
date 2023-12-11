@@ -11,7 +11,7 @@ class ARRAYLISTException : public Exception
 		int valeur;
 	public:
 		ARRAYLISTException(void);
-		ARRAYLISTException(int v, const char* m);
+		ARRAYLISTException(int v,const string m);
 		ARRAYLISTException(const ARRAYLISTException& e);
 
 		~ARRAYLISTException();

@@ -20,8 +20,8 @@ class ImageB : public Image
 		static Couleur couleurFalse;
 
 		ImageB(void);
-		ImageB(int i,const char *n);
-		ImageB(int i,const char *n,const Dimension& d);
+		ImageB(int i,const string n);
+		ImageB(int i,const string n,const Dimension& d);
 		ImageB(const ImageB& p);
 
 		~ImageB();

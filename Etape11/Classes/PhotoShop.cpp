@@ -130,3 +130,7 @@ PhotoShop& PhotoShop::getInstance()
 	return instance;
 }
 
+ArrayList<Image*> PhotoShop::getArraylist()const
+{
+	return images;
+}

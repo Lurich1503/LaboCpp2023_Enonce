@@ -12,30 +12,27 @@ Image::Image(void)
 	cout << ">>> Image : constructeur par defaut <<<" << endl;
 #endif
 	setId(-1);
-	nom = NULL;
 	setNom("???");
 }
 
 //----------------------------------------------
 //-----CONSTRUCTEURS D'INITIALISATION
 //----------------------------------------------
-Image::Image(int i,const char *n)
+Image::Image(int i,const string n)
 {
 #ifdef DEBUG
 	cout << ">>> Image : constructeur d'initialisation <<<" << endl;
 #endif
 	setId(i);
-	nom = NULL;
 	setNom(n);
 }
 
-Image::Image(int i,const char *n, const Dimension& d)
+Image::Image(int i,const string n, const Dimension& d)
 {
 #ifdef DEBUG
 	cout << ">>> ImageNG : constructeur d'initialisation avec dimension <<<" << endl;
 #endif
 	setId(i);
-	nom = NULL;
 	setNom(n);
 	setDimension(d);
 }
@@ -50,19 +47,17 @@ Image::Image(const Image& p)
 	cout << ">>> Image : constructeur de copie <<<" << endl;
 #endif
 	setId(p.getId());
-	nom = NULL;
 	setNom(p.getNom());
 	setDimension(p.getDimension());
 }
 
-Image::Image(const char *n)
+Image::Image(const string n)
 {
 #ifdef DEBUG
 	cout << ">>> Image : constructeur de copie d'importation de fichier" << endl;
 #endif
 
 	setId(-1);
-	nom = NULL;
 	setNom(n);
 }
 
@@ -75,8 +70,6 @@ Image::~Image()
 	cout << ">>> Image : destructeur <<<" << endl;
 #endif
 
-	if (nom)
-		delete nom;
 }
 
 //----------------------------------------------
@@ -87,15 +80,8 @@ void Image::setId(int i)
 	id = i;
 }
 
-void Image::setNom(const char *n)
+void Image::setNom(const string n)
 {
-	if (nom) delete nom;
-	if (n == NULL)
-	{
-		nom = NULL;
-		return;
-	}
-	nom = new char[strlen(n) + 1];
 	strcpy (nom, n);
 }
 
@@ -113,7 +99,7 @@ int Image::getId() const
 	return id;
 }
 
-const char * Image::getNom() const
+const string Image::getNom() const
 {
 	return nom;
 }
