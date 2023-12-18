@@ -33,7 +33,6 @@ class ImageRGB : public Image
 		void setPixel(int x, int y, const Couleur& valeur);
 
 		Couleur getPixel(int x, int y)const;
-		string getType()const;
 
 		ImageRGB& operator=(const ImageRGB&);
 

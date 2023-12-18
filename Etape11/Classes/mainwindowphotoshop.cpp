@@ -18,6 +18,7 @@
 #include "Traitements.h"
 #include "XYException.h"
 #include "ArrayList.h"
+#include "ArrayListException.h"
 
 
 MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindowPhotoShop)
@@ -405,29 +406,93 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
   // Etape 11 (TO DO)
   string NomFichier, type;
 
+
   NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageNG :");
-
-  ImageNG* instance;
-
-  instance = new ImageNG(NomFichier);
-
-  PhotoShop::getInstance().ajouteImage(instance);
-
-  videTableImages();
-
-  Iterateur<Image*> it(PhotoShop::getInstance().getArraylist());
-  
-  for(it.reset(); !it.end(); it++)
+  if(NomFichier != "")
   {
-    ajouteTupleTableImages((&it)->getId(), (&it)->getType(), to_string((&it)->getDimension().getLargeur()) + "X" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
-  }
+    ImageNG* instance;
 
+    instance = new ImageNG(NomFichier);
+    instance->importFromFile(NomFichier);
+
+    PhotoShop::getInstance().ajouteImage(instance);
+
+    videTableImages();
+
+    ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+    Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+    for(it.reset(); !it.end(); it++)
+    {
+      ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+      if(pNG != NULL)
+      {
+        type = "NG";
+      }
+      else
+      {
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+        if(pRGB != NULL)
+        {
+          type = "RGB";
+        }
+        else
+        {
+          type = "B";
+        }
+      }
+      ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+    }
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionCharger_ImageRGB_triggered()
 {
   // Etape 11 (TO DO)
+  string NomFichier, type;
+
+
+  NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageRGB :");
+
+  if(NomFichier != "")
+  {
+
+    ImageRGB* instance;
+
+    instance = new ImageRGB(NomFichier);
+    instance->importFromFile(NomFichier);
+
+    PhotoShop::getInstance().ajouteImage(instance);
+
+    videTableImages();
+
+    ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+    Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+    for(it.reset(); !it.end(); it++)
+    {
+      ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+      if(pNG != NULL)
+      {
+        type = "NG";
+      }
+      else
+      {
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+        if(pRGB != NULL)
+        {
+          type = "RGB";
+        }
+        else
+        {
+          type = "B";
+        }
+      }
+      ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+    }
+  }
+
 
 }
 
@@ -435,6 +500,45 @@ void MainWindowPhotoShop::on_actionCharger_ImageRGB_triggered()
 void MainWindowPhotoShop::on_actionEnregistrer_ImageNB_triggered()
 {
   // Etape 11 (TO DO)
+  int indice;
+  indice = getIndiceImageSelectionnee();
+  if(indice == -1)
+  {
+    dialogueErreur("erreur image selectionnee","aucune image selectionnee !");
+  }
+  else
+  {
+     Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+
+     ImageNG* pNG = dynamic_cast<ImageNG*>(instance);
+
+     if(pNG == NULL)
+     {
+        dialogueErreur("erreur de type", "type ne correspond pas a une imageNG !");
+     }
+     else
+     {
+       string Nom, Format;
+       Nom = dialogueDemandeFichierEnregistrer("Veuillez entrez le nom du fichier de l'image a enregistrer :");
+
+       if(extension_valide(Nom)== -1)
+       {
+          dialogueErreur("erreur de nom de fichier", "le nom de fichier doit se terminer par .jpg ou .bmp ou .png !");
+       }
+       else
+       {
+          Format = dialogueDemandeTexte("Format", "Veuillez entrer le format du fichier :");
+          if(Format != "JPG" && Format != "BMP" && Format != "PNG")
+          {
+              dialogueErreur("erreur de format", "le format doit etre soit JPG, BMP ou PNJ !");
+          }
+          else
+          {
+              pNG->exportToFile(Nom,Format);
+          }
+       }
+     }
+  }
 
 }
 
@@ -442,6 +546,45 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageNB_triggered()
 void MainWindowPhotoShop::on_actionEnregistrer_ImageRGB_triggered()
 {
   // Etape 11 (TO DO)
+  int indice;
+  indice = getIndiceImageSelectionnee();
+  if(indice == -1)
+  {
+    dialogueErreur("erreur image selectionnee","aucune image selectionnee !");
+  }
+  else
+  {
+     Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+
+     ImageRGB* pRGB = dynamic_cast<ImageRGB*>(instance);
+
+     if(pRGB == NULL)
+     {
+        dialogueErreur("erreur de type", "type ne correspond pas a une imageRGB !");
+     }
+     else
+     {
+       string Nom, Format;
+       Nom = dialogueDemandeFichierEnregistrer("Veuillez entrez le nom du fichier de l'image a enregistrer :");
+
+       if(extension_valide(Nom)== -1)
+       {
+          dialogueErreur("erreur de nom de fichier", "le nom de fichier doit se terminer par .jpg ou .bmp ou .png !");
+       }
+       else
+       {
+          Format = dialogueDemandeTexte("Format", "Veuillez entrer le format du fichier :");
+          if(Format != "JPG" && Format != "BMP" && Format != "PNG")
+          {
+              dialogueErreur("erreur de format", "le format doit etre soit JPG, BMP ou PNJ !");
+          }
+          else
+          {
+              pRGB->exportToFile(Nom,Format);
+          }
+       }
+     }
+  }
 
 }
 
@@ -449,6 +592,45 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageRGB_triggered()
 void MainWindowPhotoShop::on_actionEnregistrer_ImageB_triggered()
 {
   // Etape 11 (TO DO)
+  int indice;
+  indice = getIndiceImageSelectionnee();
+  if(indice == -1)
+  {
+    dialogueErreur("erreur image selectionnee","aucune image selectionnee !");
+  }
+  else
+  {
+     Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+
+     ImageB* pB = dynamic_cast<ImageB*>(instance);
+
+     if(pB == NULL)
+     {
+        dialogueErreur("erreur de type", "type ne correspond pas a une imageB !");
+     }
+     else
+     {
+       string Nom, Format;
+       Nom = dialogueDemandeFichierEnregistrer("Veuillez entrez le nom du fichier de l'image a enregistrer :");
+
+       if(extension_valide(Nom)== -1)
+       {
+          dialogueErreur("erreur de nom de fichier", "le nom de fichier doit se terminer par .jpg ou .bmp ou .png !");
+       }
+       else
+       {
+          Format = dialogueDemandeTexte("Format", "Veuillez entrer le format du fichier :");
+          if(Format != "JPG" && Format != "BMP" && Format != "PNG")
+          {
+              dialogueErreur("erreur de format", "le format doit etre soit JPG, BMP ou PNJ !");
+          }
+          else
+          {
+              pB->exportToFile(Nom,Format);
+          }
+       }
+     }
+  }
 
 }
 
@@ -456,6 +638,45 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageB_triggered()
 void MainWindowPhotoShop::on_actionImage_selectionn_e_triggered()
 {
   // Etape 11 (TO DO)
+  int indice;
+  string type;
+  indice = getIndiceImageSelectionnee();
+  if(indice == -1)
+  {
+    dialogueErreur("erreur image selectionnee","aucune image selectionnee !");
+  }
+  else
+  {
+    PhotoShop::getInstance().supprimeImageParIndice(indice);
+    videTableImages();
+    ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+    Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+    for(it.reset(); !it.end(); it++)
+    {
+      ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+      if(pNG != NULL)
+      {
+        type = "NG";
+      }
+      else
+      {
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+        if(pRGB != NULL)
+        {
+          type = "RGB";
+        }
+        else
+        {
+          type = "B";
+        }
+      }
+      ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+    }
+    setImageNG("selection",NULL);
+    setParametresImageNG(-1, -1, -1, 0);
+    setNomImage("");
+  }
 
 }
 
@@ -463,6 +684,48 @@ void MainWindowPhotoShop::on_actionImage_selectionn_e_triggered()
 void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 {
   // Etape 11 (TO DO)
+  int indice;
+  string type;
+  indice = dialogueDemandeInt("Supprimer image par id", "veuillez entrer un indice :");
+  try
+  {
+    PhotoShop::getInstance().supprimeImageParIndice(indice);
+  }
+  catch(const ARRAYLISTException& m)
+  {
+    cout << "Exception ARRAYLISTException catchee..." << endl;
+    cout << "message = " << m.getMessageErreur() << endl;
+    cout << "valeur de l'indice = " << m.getValeur() << endl;
+    dialogueErreur("erreur indice selectionnee","aucune image a cet indice dans la liste !");
+  }
+    videTableImages();
+    ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+    Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+    for(it.reset(); !it.end(); it++)
+    {
+      ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+      if(pNG != NULL)
+      {
+        type = "NG";
+      }
+      else
+      {
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+        if(pRGB != NULL)
+        {
+          type = "RGB";
+        }
+        else
+        {
+          type = "B";
+        }
+      }
+      ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+    }
+    setImageNG("selection",NULL);
+    setParametresImageNG(-1, -1, -1, 0);
+    setNomImage("");
 
 }
 
@@ -500,6 +763,39 @@ void MainWindowPhotoShop::on_actionReset_triggered()
 void MainWindowPhotoShop::on_tableWidgetImages_itemSelectionChanged()
 {
   // Etape 11 (TO DO)
+  int indice;
+  indice = getIndiceImageSelectionnee();
+   if(indice != -1) // si on supprime l'image que l'on sélectionne ne pas demander l'image 
+  {
+    Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+    setNomImage(instance->getNom());
+
+    ImageNG* pNG = dynamic_cast<ImageNG*>(instance);
+    if(pNG != NULL)
+     {
+        setParametresImageNG(pNG->getMaximum(), pNG->getMinimum(), pNG->getLuminance(), pNG->getContraste());
+        setImageNG("selection",pNG);
+     }
+     else
+     {
+        setParametresImageNG(-1, -1, -1, 0);
+
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(instance);
+        if(pRGB != NULL)
+        {
+          setImageRGB("selection",pRGB);
+        }
+        else
+        {
+          ImageB* pB = dynamic_cast<ImageB*>(instance);
+          if(pB != NULL)
+          {
+            setImageB("selection",pB);
+          }
+        }
+     }
+  }
+
 
 }
 
@@ -509,6 +805,44 @@ void MainWindowPhotoShop::on_tableWidgetImages_itemSelectionChanged()
 void MainWindowPhotoShop::on_pushButtonModifierNom_clicked()
 {
   // Etape 11 (TO DO)
+  string nom, type;
+  int indice;
+
+  nom = getNomImage();
+
+  indice = getIndiceImageSelectionnee();
+
+  Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+
+  instance->setNom(nom);
+
+  videTableImages();
+  ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+  Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+  for(it.reset(); !it.end(); it++)
+  {
+    ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+    if(pNG != NULL)
+    {
+      type = "NG";
+    }
+    else
+    {
+      ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+      if(pRGB != NULL)
+      {
+        type = "RGB";
+      }
+      else
+      {
+        type = "B";
+      }
+    }
+    ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+  }
+
+
 
 }
 
@@ -559,4 +893,31 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
 {
     // Etape 12 (TO DO)
 
+}
+
+
+// Fonctions ajoutees
+int MainWindowPhotoShop::extension_valide(const string nomfichier)
+{
+  string extensionJPG =".jpg";
+  string extensionBMP =".bmp";
+  string extensionPNG =".png";
+
+  size_t tailleExtension = extensionJPG.size();
+
+  if(nomfichier.size() < tailleExtension)
+  {
+    return -1; // chaine trop courte
+  }
+
+  string extension_fichier = nomfichier.substr(nomfichier.size() - tailleExtension, tailleExtension); // extraire extension
+
+  if(extension_fichier == extensionJPG || extension_fichier == extensionBMP || extension_fichier == extensionPNG)
+  {
+    return 1;
+  }
+  else
+  {
+    return -1;
+  }
 }

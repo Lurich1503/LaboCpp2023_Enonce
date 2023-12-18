@@ -36,7 +36,6 @@ class ImageNG : public Image
 		int getMinimum() const;
 		int getMaximum() const;
 		float getContraste() const;
-		string getType()const;
 	
 		void Affiche() const;
 		void Dessine();

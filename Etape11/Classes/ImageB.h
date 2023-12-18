@@ -33,8 +33,7 @@ class ImageB : public Image
 		void setPixel(int x, int y, bool valeur);
 
 		bool getPixel(int x, int y)const;
-		string getType()const;
-
+		
 		void exportToFile(const string fichier, const string format);
 
 		ImageB& operator=(const ImageB&);

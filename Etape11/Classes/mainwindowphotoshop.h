@@ -81,6 +81,9 @@ private slots:
     void on_actionImporterCSV_triggered();
     void on_actionReset_triggered();
 
+    //fonctions ajoutees
+    int extension_valide(const string nomfichier);
+
 private:
     Ui::MainWindowPhotoShop *ui;
 };

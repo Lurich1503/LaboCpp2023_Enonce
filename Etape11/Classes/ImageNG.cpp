@@ -179,11 +179,6 @@ int ImageNG::getPixel(int x, int y) const
 	return matrice[x][y];
 }
 
-string ImageNG::getType() const 
-{
-	return "NG";
-}
-
 
 //----------------------------------------------
 //------------METHODE D'INSTANCE

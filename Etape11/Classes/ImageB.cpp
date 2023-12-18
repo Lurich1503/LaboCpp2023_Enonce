@@ -150,11 +150,6 @@ bool ImageB::getPixel(int x, int y) const
 	return matrice[x][y];
 }
 
-string ImageB::getType() const 
-{
-	return "B";
-}
-
 //----------------------------------------------
 //------------METHODE D'INSTANCE
 //----------------------------------------------
