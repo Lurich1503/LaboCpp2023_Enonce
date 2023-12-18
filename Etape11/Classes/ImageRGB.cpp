@@ -160,6 +160,11 @@ Couleur ImageRGB::getPixel(int x, int y) const
 	return matrice[x][y];
 }
 
+string ImageRGB::getType() const 
+{
+	return "RGB";
+}
+
 //----------------------------------------------
 //------------METHODE D'INSTANCE
 //----------------------------------------------

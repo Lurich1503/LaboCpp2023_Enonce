@@ -27,6 +27,7 @@ class Image
 		int getId() const;
 		const string getNom() const;
 		Dimension getDimension() const;
+		virtual string getType() const = 0;
 
 		virtual void Affiche() const = 0;
 		virtual void Dessine() = 0;

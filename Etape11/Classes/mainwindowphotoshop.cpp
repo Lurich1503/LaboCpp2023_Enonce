@@ -73,10 +73,6 @@ MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),
 
     // Etape 14 (TO DO)
     // Restauration bibliothèque via fichier de sauvegarde
-
-    // TESTS DEMOS A SUPPRIMER
-    ajouteTupleTableImages(3,"NG","256x256","lena.bmp");
-    setResultatBoolean(1);
 }
 
 MainWindowPhotoShop::~MainWindowPhotoShop()
@@ -407,17 +403,14 @@ void MainWindowPhotoShop::on_actionQuitter_triggered()
 void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
 {
   // Etape 11 (TO DO)
-  string NomFichier;
-  char nom[200];
+  string NomFichier, type;
 
-  NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageNB :");
+  NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageNG :");
 
   ImageNG* instance;
 
-  strcpy(nom, NomFichier.c_str());
-  instance = new ImageNG(nom);
+  instance = new ImageNG(NomFichier);
 
-  instance->importFromFile(NomFichier.c_str());
   PhotoShop::getInstance().ajouteImage(instance);
 
   videTableImages();
@@ -426,7 +419,7 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
   
   for(it.reset(); !it.end(); it++)
   {
-    /*ajouteTupleTableImages((&it)->getId(), (&it)->get)*/
+    ajouteTupleTableImages((&it)->getId(), (&it)->getType(), to_string((&it)->getDimension().getLargeur()) + "X" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
   }
 
 }

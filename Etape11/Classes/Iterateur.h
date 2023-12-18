@@ -17,7 +17,7 @@ class Iterateur
 		void operator++();
 		void operator++(int);
 		operator T() const;
-		T& operator&(void);
+		T& operator&(void) const;
 
 };
 

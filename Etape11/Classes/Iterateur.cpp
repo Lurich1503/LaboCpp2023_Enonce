@@ -9,7 +9,7 @@ void Iterateur<T>::reset()
 template<class T>
 bool Iterateur<T>::end()
 {
-	return pCurliste == 0;
+	return pCurliste == NULL;
 }
 
 template<class T>
@@ -34,7 +34,7 @@ Iterateur<T>::operator T() const
 }
 
 template<class T>
-T& Iterateur<T>::operator& (void)
+T& Iterateur<T>::operator& (void) const
 {
 	return pCurliste->valeur;
 }
