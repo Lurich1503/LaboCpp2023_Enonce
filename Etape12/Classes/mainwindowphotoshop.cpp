@@ -1009,7 +1009,7 @@ void MainWindowPhotoShop::on_pushButtonSupprimerResultat_clicked()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
 {
-    // Etape 12 (TO DO)
+  // Etape 12 (TO DO)
   string traitement;
   traitement = getTraitementSelectionne();
   if(PhotoShop::operande1 == NULL)
@@ -1018,13 +1018,13 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
   }
   else
   {
-    if((traitement == "Différence" || traitement == "Comparaison (==)") && PhotoShop::operande2 == NULL)
+    if((traitement == "Différence" || traitement == "Comparaison (==)" || traitement == "Comparaison (<)" || traitement == "Comparaison (>)") && PhotoShop::operande2 == NULL)
     {
       dialogueErreur("operande2", "veuillez selectionner une image dans l'operande2 si vous voulez faire ce traitement !");
     }
     else
     {
-      if((traitement != "Différence" && traitement != "Comparaison (==)") && PhotoShop::operande2 != NULL)
+      if((traitement != "Différence" && traitement != "Comparaison (==)" && traitement != "Comparaison (<)" && traitement != "Comparaison (>)") && PhotoShop::operande2 != NULL)
       {
         dialogueErreur("operande2", "veuillez enlever l'image dans l'operande2 si vous voulez faire ce traitement !");
       }
@@ -1083,19 +1083,269 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
                 }
             }
           }
+          else
+          {
+            if(traitement == "Assombrir (- val)")
+            {
+              ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+              if(pNG == NULL)
+              {
+                  dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+              }
+              else
+              {
+                  int valeur = dialogueDemandeInt("Assombrir (- val)","Entrez une valeur :");
+                  try
+                  {
+                    ImageNG* img_resultat = new ImageNG();
+                    (*img_resultat) = (*pNG); // je mets image de pNG dans img_resultat pour ne pas modifier l'image dans la liste d'images car pNG pointe vers la liste!!!
+                    (*img_resultat) = (*img_resultat) - valeur;
+                    PhotoShop::resultat = img_resultat;
+                  }
+                  catch(const RGBException& m)
+                  {
+                    cout << "Exception RGBException catchee..." << endl;
+                    cout << "message = " << m.getMessageErreur() << endl;
+                    cout << "valeur = " << m.getValeur() << endl;
+                    dialogueErreur("Niveau de gris invalide","Impossible d'assombrir l'image avec cette valeur !");
+                  }
+              }
+            }
+            else
+            {
+                if(traitement == "Assombrir (--)")
+                {
+                  ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                  if(pNG == NULL)
+                  {
+                      dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                  }
+                  else
+                  {
+                      try
+                      {
+                        ImageNG* img_resultat = new ImageNG();
+                        (*img_resultat) = (*pNG);
+                        (*img_resultat) = --(*img_resultat);
+                        PhotoShop::resultat = img_resultat;
+                      } 
+                      catch(const RGBException& m)
+                      {
+                        cout << "Exception RGBException catchee..." << endl;
+                        cout << "message = " << m.getMessageErreur() << endl;
+                        cout << "valeur = " << m.getValeur() << endl;
+                        dialogueErreur("Niveau de gris invalide","Impossible d'assombrir l'image !");
+                      }
+                  }
+                }
+                else
+                {
+                    if(traitement == "Différence")
+                    {
+                      ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                      if(pNG == NULL)
+                      {
+                          dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                      }
+                      else
+                      {
+                          ImageNG* pNG1 = dynamic_cast<ImageNG*>(PhotoShop::operande2);
+                          if(pNG1 == NULL)
+                          {
+                              dialogueErreur("operande2", "L'image dans l'operande2 doit etre de type NG !");
+                          }
+                          else
+                          {
+                              try
+                              {
+                                ImageNG* img_resultat = new ImageNG();
+                                (*img_resultat) = (*pNG);
+                                (*img_resultat) = (*img_resultat) - (*pNG1);
+                                PhotoShop::resultat = img_resultat;
+                              } 
+                              catch(const RGBException& m)
+                              {
+                                cout << "Exception RGBException catchee..." << endl;
+                                cout << "message = " << m.getMessageErreur() << endl;
+                                cout << "valeur = " << m.getValeur() << endl;
+                                dialogueErreur("Niveau de gris invalide","Impossible d'effectuer la difference entre les  2 images !");
+                              }
+                          }
+                      }
+                    }
+                    else
+                    {
+                        if(traitement == "Comparaison (==)")
+                        {
+                              ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                              if(pNG == NULL)
+                              {
+                                  dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                              }
+                              else
+                              {
+                                  ImageNG* pNG1 = dynamic_cast<ImageNG*>(PhotoShop::operande2);
+                                  if(pNG1 == NULL)
+                                  {
+                                      dialogueErreur("operande2", "L'image dans l'operande2 doit etre de type NG !");
+                                  }
+                                  else
+                                  {
+                                      try
+                                      {
+                                        if((*pNG) == (*pNG1))
+                                        {
+                                            setResultatBoolean(1);
+                                        }
+                                        else
+                                        {
+                                            setResultatBoolean(0);
+                                        }
+                                      } 
+                                      catch(const XYException& m)
+                                      {
+                                        cout << "Exception XYException catchee..." << endl;
+                                        cout << "message = " << m.getMessageErreur() << endl;
+                                        cout << "axe = " << m.getCoordonnee() << endl;
+                                        dialogueErreur("erreur comparaison", "impossible de comprarer 2 images de dimensions differentes!");
+                                        setResultatBoolean(-1);
+                                      }
+                                  }
+                              }
+                        }
+                        else
+                        {
+                          if(traitement == "Comparaison (<)")
+                          {
+                              ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                              if(pNG == NULL)
+                              {
+                                  dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                              }
+                              else
+                              {
+                                  ImageNG* pNG1 = dynamic_cast<ImageNG*>(PhotoShop::operande2);
+                                  if(pNG1 == NULL)
+                                  {
+                                      dialogueErreur("operande2", "L'image dans l'operande2 doit etre de type NG !");
+                                  }
+                                  else
+                                  {
+                                      try
+                                      {
+                                        if((*pNG) < (*pNG1))
+                                        {
+                                            setResultatBoolean(1);
+                                        }
+                                        else
+                                        {
+                                            setResultatBoolean(0);
+                                        }
+                                      } 
+                                      catch(const XYException& m)
+                                      {
+                                        cout << "Exception XYException catchee..." << endl;
+                                        cout << "message = " << m.getMessageErreur() << endl;
+                                        cout << "axe = " << m.getCoordonnee() << endl;
+                                        dialogueErreur("erreur comparaison", "impossible de comprarer 2 images de dimensions differentes!");
+                                        setResultatBoolean(-1);
+                                      }
+                                  }
+                              }
+                          }
+                          else
+                          {
+                            if(traitement == "Comparaison (>)")
+                            {
+                                ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                                if(pNG == NULL)
+                                {
+                                    dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                                }
+                                else
+                                {
+                                    ImageNG* pNG1 = dynamic_cast<ImageNG*>(PhotoShop::operande2);
+                                    if(pNG1 == NULL)
+                                    {
+                                        dialogueErreur("operande2", "L'image dans l'operande2 doit etre de type NG !");
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                          if((*pNG) > (*pNG1))
+                                          {
+                                              setResultatBoolean(1);
+                                          }
+                                          else
+                                          {
+                                              setResultatBoolean(0);
+                                          }
+                                        } 
+                                        catch(const XYException& m)
+                                        {
+                                          cout << "Exception XYException catchee..." << endl;
+                                          cout << "message = " << m.getMessageErreur() << endl;
+                                          cout << "axe = " << m.getCoordonnee() << endl;
+                                          dialogueErreur("erreur comparaison", "impossible de comprarer 2 images de dimensions differentes!");
+                                          setResultatBoolean(-1);
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                              if(traitement == "Seuillage")
+                              {
+                                ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                                if(pNG == NULL)
+                                {
+                                  dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                                }
+                                else
+                                {
+                                    int valeur = dialogueDemandeInt("Seuillage","Entrez une valeur :");
+                                    ImageNG* img_copie = new ImageNG(); // copie dans une image NG
+                                    (*img_copie) = (*pNG);
+                                    ImageB*  img_resultat = new ImageB(); // creation image B
+                                    (*img_resultat) = Traitements::Seuillage((*img_copie),valeur);
+                                    PhotoShop::resultat = img_resultat;
+                                }
+                              }
+                            }
+                          }
+                        }
+                    }
+                }
+            }
+          }
         }
-
-
         // mettre image resultat dans case resultat :
-        ImageNG* pNGresult = dynamic_cast<ImageNG*>(PhotoShop::resultat);
-        if(pNGresult != NULL)
+        if(traitement != "Comparaison (==)" && traitement != "Comparaison (<)" && traitement != "Comparaison (>)")
         {
-            setImageNG("resultat",pNGresult);
+            ImageNG* pNGresult = dynamic_cast<ImageNG*>(PhotoShop::resultat);
+            if(pNGresult != NULL)
+            {
+                setImageNG("resultat",pNGresult);
+                setResultatBoolean(-1);
+            }
+            else
+            {
+              ImageB* pBresult = dynamic_cast<ImageB*>(PhotoShop::resultat);
+              if(pBresult != NULL)
+              {
+                  setImageB("resultat",pBresult);
+                  setResultatBoolean(-1);
+              }
+            }
+        }
+        else
+        {
+          setImageNG("resultat",NULL);
         }
       }
     }
   }
-
 }
 
 
