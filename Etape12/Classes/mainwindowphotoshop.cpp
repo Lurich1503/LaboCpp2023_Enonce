@@ -997,6 +997,92 @@ void MainWindowPhotoShop::on_pushButtonSupprimerOperande2_clicked()
 void MainWindowPhotoShop::on_pushButtonResultat_clicked()
 {
     // Etape 12 (TO DO)
+  string type;
+  if(PhotoShop::resultat != NULL)
+  {
+      ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::resultat);
+      if(pNG != NULL)
+      {
+          ImageNG* instance;
+
+          instance = new ImageNG((*pNG));
+
+          PhotoShop::getInstance().ajouteImage(instance);
+
+          videTableImages();
+
+          ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+          Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+          for(it.reset(); !it.end(); it++)
+          {
+            ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+            if(pNG != NULL)
+            {
+              type = "NG";
+            }
+            else
+            {
+              ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+              if(pRGB != NULL)
+              {
+                type = "RGB";
+              }
+              else
+              {
+                type = "B";
+              }
+            }
+            ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+          }
+          setImageNG("resultat", NULL);
+      }
+      else
+      {
+        ImageB* pB = dynamic_cast<ImageB*>(PhotoShop::resultat);
+        if(pB != NULL)
+        {
+            ImageB* instance;
+
+            instance = new ImageB((*pB));
+
+            PhotoShop::getInstance().ajouteImage(instance);
+
+            videTableImages();
+
+            ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+            Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+            for(it.reset(); !it.end(); it++)
+            {
+              ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+              if(pNG != NULL)
+              {
+                type = "NG";
+              }
+              else
+              {
+                ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+                if(pRGB != NULL)
+                {
+                  type = "RGB";
+                }
+                else
+                {
+                  type = "B";
+                }
+              }
+              ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+            }
+            setImageB("resultat", NULL);
+        }
+      }
+      PhotoShop::resultat = NULL;
+  }
+  else
+  {
+    dialogueErreur("image resultat","aucune image a charger !");
+  }
 
 }
 
@@ -1004,6 +1090,31 @@ void MainWindowPhotoShop::on_pushButtonResultat_clicked()
 void MainWindowPhotoShop::on_pushButtonSupprimerResultat_clicked()
 {
     // Etape 12 (TO DO)
+  if(PhotoShop::resultat != NULL)
+  {
+      ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::resultat);
+      if(pNG != NULL)
+      {
+          delete pNG;
+          PhotoShop::resultat = NULL;
+          setImageNG("resultat", NULL);
+      }
+      else
+      {
+        ImageB* pB = dynamic_cast<ImageB*>(PhotoShop::resultat);
+        if(pB != NULL)
+        {
+            delete pB;
+            PhotoShop::resultat = NULL;
+            setImageB("resultat", NULL);
+        }
+      }
+  }
+  else
+  {
+    dialogueErreur("image resultat","aucune image a charger !");
+  }
+
 
 }
 
@@ -1013,6 +1124,27 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
   // Etape 12 (TO DO)
   string traitement;
   traitement = getTraitementSelectionne();
+  if(PhotoShop::resultat != NULL)  // effacer image et vider resultat avant traitement
+  {
+    ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::resultat);
+      if(pNG != NULL)
+      {
+          delete pNG;
+          setImageNG("resultat", NULL);
+      }
+      else
+      {
+        ImageB* pB = dynamic_cast<ImageB*>(PhotoShop::resultat);
+        if(pB != NULL)
+        {
+            delete pB;
+            setImageB("resultat", NULL);
+        }
+      }
+  }
+  PhotoShop::resultat = NULL; // remettre toujours resultat a NULL avant traitement
+  setResultatBoolean(-1);     // reseter le booléen
+
   if(PhotoShop::operande1 == NULL)
   {
     dialogueErreur("operande1", "veuillez selectionner une image dans l'operande1 !");
@@ -1458,7 +1590,6 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
             if(pNGresult != NULL)
             {
                 setImageNG("resultat",pNGresult);
-                setResultatBoolean(-1);
             }
             else
             {
@@ -1466,13 +1597,8 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
               if(pBresult != NULL)
               {
                   setImageB("resultat",pBresult);
-                  setResultatBoolean(-1);
               }
             }
-        }
-        else
-        {
-          setImageNG("resultat",NULL);
         }
       }
     }
