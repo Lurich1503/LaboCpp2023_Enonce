@@ -19,6 +19,7 @@
 #include "XYException.h"
 #include "ArrayList.h"
 #include "ArrayListException.h"
+#include "RGBException.h"
 
 
 MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindowPhotoShop)
@@ -864,23 +865,23 @@ void MainWindowPhotoShop::on_pushButtonOperande1_clicked()
   else
   {
       Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
-      Image* operande1 = instance;
+      PhotoShop::operande1 = instance;
 
-      ImageNG* pNG = dynamic_cast<ImageNG*>(operande1);
+      ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
       if(pNG != NULL)
       {
         setImageNG("operande1", pNG);
       }
       else
       {
-        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(operande1);
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(PhotoShop::operande1);
         if(pRGB != NULL)
         {
           setImageRGB("operande1", pRGB);
         }
         else
         {
-          ImageB* pB = dynamic_cast<ImageB*>(operande1);
+          ImageB* pB = dynamic_cast<ImageB*>(PhotoShop::operande1);
           if(pB != NULL)
           {
             setImageB("operande1",pB);
@@ -896,6 +897,28 @@ void MainWindowPhotoShop::on_pushButtonOperande1_clicked()
 void MainWindowPhotoShop::on_pushButtonSupprimeOperande1_clicked()
 {
     // Etape 12 (TO DO)
+      ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+      if(pNG != NULL)
+      {
+        setImageNG("operande1", NULL);
+      }
+      else
+      {
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(PhotoShop::operande1);
+        if(pRGB != NULL)
+        {
+          setImageRGB("operande1", NULL);
+        }
+        else
+        {
+          ImageB* pB = dynamic_cast<ImageB*>(PhotoShop::operande1);
+          if(pB != NULL)
+          {
+            setImageB("operande1",NULL);
+          }
+        }
+      }
+    PhotoShop::operande1 = NULL;
 
 }
 
@@ -913,23 +936,23 @@ void MainWindowPhotoShop::on_pushButtonOperande2_clicked()
   else
   {
       Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
-      Image* operande2 = instance;
+      PhotoShop::operande2 = instance;
 
-      ImageNG* pNG = dynamic_cast<ImageNG*>(operande2);
+      ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande2);
       if(pNG != NULL)
       {
         setImageNG("operande2", pNG);
       }
       else
       {
-        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(operande2);
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(PhotoShop::operande2);
         if(pRGB != NULL)
         {
           setImageRGB("operande2", pRGB);
         }
         else
         {
-          ImageB* pB = dynamic_cast<ImageB*>(operande2);
+          ImageB* pB = dynamic_cast<ImageB*>(PhotoShop::operande2);
           if(pB != NULL)
           {
             setImageB("operande2",pB);
@@ -944,6 +967,28 @@ void MainWindowPhotoShop::on_pushButtonOperande2_clicked()
 void MainWindowPhotoShop::on_pushButtonSupprimerOperande2_clicked()
 {
     // Etape 12 (TO DO)
+      ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande2);
+      if(pNG != NULL)
+      {
+        setImageNG("operande2", NULL);
+      }
+      else
+      {
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(PhotoShop::operande2);
+        if(pRGB != NULL)
+        {
+          setImageRGB("operande2", NULL);
+        }
+        else
+        {
+          ImageB* pB = dynamic_cast<ImageB*>(PhotoShop::operande2);
+          if(pB != NULL)
+          {
+            setImageB("operande2",NULL);
+          }
+        }
+      }
+    PhotoShop::operande2 = NULL;
 
 }
 
@@ -965,6 +1010,91 @@ void MainWindowPhotoShop::on_pushButtonSupprimerResultat_clicked()
 void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
 {
     // Etape 12 (TO DO)
+  string traitement;
+  traitement = getTraitementSelectionne();
+  if(PhotoShop::operande1 == NULL)
+  {
+    dialogueErreur("operande1", "veuillez selectionner une image dans l'operande1 !");
+  }
+  else
+  {
+    if((traitement == "Différence" || traitement == "Comparaison (==)") && PhotoShop::operande2 == NULL)
+    {
+      dialogueErreur("operande2", "veuillez selectionner une image dans l'operande2 si vous voulez faire ce traitement !");
+    }
+    else
+    {
+      if((traitement != "Différence" && traitement != "Comparaison (==)") && PhotoShop::operande2 != NULL)
+      {
+        dialogueErreur("operande2", "veuillez enlever l'image dans l'operande2 si vous voulez faire ce traitement !");
+      }
+      else
+      {
+        if(traitement == "Eclaircir (+ val)")
+        {
+            ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+            if(pNG == NULL)
+            {
+                dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+            }
+            else
+            {
+                int valeur = dialogueDemandeInt("Eclaircir (+val)","Entrez une valeur :");
+                try
+                {
+                  ImageNG* img_resultat = new ImageNG();
+                  (*img_resultat) = (*pNG); // je mets image de pNG dans img_resultat pour ne pas modifier l'image dans la liste d'images car pNG pointe vers la liste!!!
+                  (*img_resultat) = (*img_resultat) + valeur;
+                  PhotoShop::resultat = img_resultat;
+                }
+                catch(const RGBException& m)
+                {
+                  cout << "Exception RGBException catchee..." << endl;
+                  cout << "message = " << m.getMessageErreur() << endl;
+                  cout << "valeur = " << m.getValeur() << endl;
+                  dialogueErreur("Niveau de gris invalide","Impossible d'eclaircir l'image avec cette valeur !");
+                }
+            }
+        }
+        else
+        {
+          if(traitement == "Eclaircir (++)")
+          {
+            ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+            if(pNG == NULL)
+            {
+                dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+            }
+            else
+            {
+                try
+                {
+                  ImageNG* img_resultat = new ImageNG();
+                  (*img_resultat) = (*pNG);
+                  (*img_resultat) = ++(*img_resultat);
+                  PhotoShop::resultat = img_resultat;
+                } 
+                catch(const RGBException& m)
+                {
+                  cout << "Exception RGBException catchee..." << endl;
+                  cout << "message = " << m.getMessageErreur() << endl;
+                  cout << "valeur = " << m.getValeur() << endl;
+                  dialogueErreur("Niveau de gris invalide","Impossible d'eclaircir l'image !");
+                }
+            }
+          }
+        }
+
+
+        // mettre image resultat dans case resultat :
+        ImageNG* pNGresult = dynamic_cast<ImageNG*>(PhotoShop::resultat);
+        if(pNGresult != NULL)
+        {
+            setImageNG("resultat",pNGresult);
+        }
+      }
+    }
+  }
 
 }
 
