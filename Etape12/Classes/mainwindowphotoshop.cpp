@@ -20,6 +20,7 @@
 #include "ArrayList.h"
 #include "ArrayListException.h"
 #include "RGBException.h"
+#include "Exception.h"
 
 
 MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindowPhotoShop)
@@ -1304,12 +1305,142 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
                                 }
                                 else
                                 {
-                                    int valeur = dialogueDemandeInt("Seuillage","Entrez une valeur :");
+                                    int valeur = dialogueDemandeInt("Seuillage","Entrez une valeur pour le seuil :");
                                     ImageNG* img_copie = new ImageNG(); // copie dans une image NG
                                     (*img_copie) = (*pNG);
                                     ImageB*  img_resultat = new ImageB(); // creation image B
                                     (*img_resultat) = Traitements::Seuillage((*img_copie),valeur);
                                     PhotoShop::resultat = img_resultat;
+                                }
+                              }
+                              else
+                              {
+                                if(traitement == "Filtre moyenneur")
+                                {
+                                  ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                                  if(pNG == NULL)
+                                  {
+                                    dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                                  }
+                                  else
+                                  {
+                                      int valeur = dialogueDemandeInt("Filtre moyenneur","Entrez une valeur pour la taille :");
+                                      try
+                                      {
+                                        ImageNG* img_resultat = new ImageNG(); 
+                                        (*img_resultat) = (*pNG);
+                                        (*img_resultat) = Traitements::FiltreMoyenneur((*img_resultat),valeur);
+                                        PhotoShop::resultat = img_resultat;
+                                      }
+                                      catch(const Exception& m)
+                                      {
+                                        cout << "Exception Exception catchee..." << endl;
+                                        cout << "message = " << m.getMessageErreur() << endl;
+                                        dialogueErreur("taille", "La taille du filtre doit toujours etre un nombre impair !");
+                                      }
+                                  }
+                                }
+                                else
+                                {
+                                  if(traitement == "Filtre médian")
+                                  {
+                                    ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                                    if(pNG == NULL)
+                                    {
+                                      dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                                    }
+                                    else
+                                    {
+                                        int valeur = dialogueDemandeInt("Filtre median","Entrez une valeur pour la taille :");
+                                        try
+                                        {
+                                          ImageNG* img_resultat = new ImageNG(); 
+                                          (*img_resultat) = (*pNG);
+                                          (*img_resultat) = Traitements::FiltreMedian((*img_resultat),valeur);
+                                          PhotoShop::resultat = img_resultat;
+                                        }
+                                        catch(const Exception& m)
+                                        {
+                                          cout << "Exception Exception catchee..." << endl;
+                                          cout << "message = " << m.getMessageErreur() << endl;
+                                          dialogueErreur("taille", "La taille du filtre doit toujours etre un nombre impair !");
+                                        }
+                                    }
+                                  }
+                                  else
+                                  {
+                                    if(traitement == "Erosion")
+                                    {
+                                      ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                                      if(pNG == NULL)
+                                      {
+                                        dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                                      }
+                                      else
+                                      {
+                                          int valeur = dialogueDemandeInt("Filtre median","Entrez une valeur pour la taille :");
+                                          try
+                                          {
+                                            ImageNG* img_resultat = new ImageNG(); 
+                                            (*img_resultat) = (*pNG);
+                                            (*img_resultat) = Traitements::Erosion((*img_resultat),valeur);
+                                            PhotoShop::resultat = img_resultat;
+                                          }
+                                          catch(const Exception& m)
+                                          {
+                                            cout << "Exception Exception catchee..." << endl;
+                                            cout << "message = " << m.getMessageErreur() << endl;
+                                            dialogueErreur("taille", "La taille entree doit toujours etre un nombre impair !");
+                                          }
+                                      }
+                                    }
+                                    else
+                                    {
+                                      if(traitement == "Dilatation")
+                                      {
+                                        ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                                        if(pNG == NULL)
+                                        {
+                                          dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                                        }
+                                        else
+                                        {
+                                            int valeur = dialogueDemandeInt("Dilatation","Entrez une valeur pour la taille :");
+                                            try
+                                            {
+                                              ImageNG* img_resultat = new ImageNG(); 
+                                              (*img_resultat) = (*pNG);
+                                              (*img_resultat) = Traitements::Dilatation((*img_resultat),valeur);
+                                              PhotoShop::resultat = img_resultat;
+                                            }
+                                            catch(const Exception& m)
+                                            {
+                                              cout << "Exception Exception catchee..." << endl;
+                                              cout << "message = " << m.getMessageErreur() << endl;
+                                              dialogueErreur("taille", "La taille du entree doit toujours etre un nombre impair !");
+                                            }
+                                        }
+                                      }
+                                      else
+                                      {
+                                        if(traitement == "Négatif")
+                                        {
+                                          ImageNG* pNG = dynamic_cast<ImageNG*>(PhotoShop::operande1);
+                                          if(pNG == NULL)
+                                          {
+                                            dialogueErreur("operande1", "L'image dans l'operande1 doit etre de type NG !");
+                                          }
+                                          else
+                                          {
+                                            ImageNG* img_resultat = new ImageNG(); 
+                                            (*img_resultat) = (*pNG);
+                                            (*img_resultat) = Traitements::Negatif((*img_resultat));
+                                            PhotoShop::resultat = img_resultat;
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
                                 }
                               }
                             }
