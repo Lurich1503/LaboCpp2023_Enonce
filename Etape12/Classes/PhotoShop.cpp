@@ -4,6 +4,9 @@
 
 int PhotoShop::numCourant = 1;
 PhotoShop PhotoShop::instance;
+Image* PhotoShop::operande1 = NULL;
+Image* PhotoShop::operande2 = NULL;
+Image* PhotoShop::resultat = NULL;
 
 //----------------------------------------------
 //---------------CONSTRUCTEURS

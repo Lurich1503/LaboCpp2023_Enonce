@@ -18,8 +18,9 @@ class PhotoShop
 		PhotoShop(const PhotoShop &);
 		PhotoShop& operator=(const PhotoShop&);
 
-	public:
 		~PhotoShop();
+
+	public:
 
 		void reset();
 		void ajouteImage(Image* pImage);

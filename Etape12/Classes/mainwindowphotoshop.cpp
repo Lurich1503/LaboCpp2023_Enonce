@@ -811,38 +811,42 @@ void MainWindowPhotoShop::on_pushButtonModifierNom_clicked()
   nom = getNomImage();
 
   indice = getIndiceImageSelectionnee();
-
-  Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
-
-  instance->setNom(nom);
-
-  videTableImages();
-  ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
-  Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
-
-  for(it.reset(); !it.end(); it++)
+  if(indice == -1)
   {
-    ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
-    if(pNG != NULL)
-    {
-      type = "NG";
-    }
-    else
-    {
-      ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
-      if(pRGB != NULL)
-      {
-        type = "RGB";
-      }
-      else
-      {
-        type = "B";
-      }
-    }
-    ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+    dialogueErreur("erreur image selectionnee","aucune image selectionnee !");
   }
+  else
+  {
+      Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
 
+      instance->setNom(nom);
 
+      videTableImages();
+      ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+      Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+      for(it.reset(); !it.end(); it++)
+      {
+        ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+        if(pNG != NULL)
+        {
+          type = "NG";
+        }
+        else
+        {
+          ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+          if(pRGB != NULL)
+          {
+            type = "RGB";
+          }
+          else
+          {
+            type = "B";
+          }
+        }
+        ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+      }
+  }
 
 }
 
@@ -850,6 +854,41 @@ void MainWindowPhotoShop::on_pushButtonModifierNom_clicked()
 void MainWindowPhotoShop::on_pushButtonOperande1_clicked()
 {
     // Etape 12 (TO DO)
+  int indice;
+
+  indice = getIndiceImageSelectionnee();
+  if(indice == -1)
+  {
+    dialogueErreur("erreur image selectionnee","aucune image selectionnee !");
+  }
+  else
+  {
+      Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+      Image* operande1 = instance;
+
+      ImageNG* pNG = dynamic_cast<ImageNG*>(operande1);
+      if(pNG != NULL)
+      {
+        setImageNG("operande1", pNG);
+      }
+      else
+      {
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(operande1);
+        if(pRGB != NULL)
+        {
+          setImageRGB("operande1", pRGB);
+        }
+        else
+        {
+          ImageB* pB = dynamic_cast<ImageB*>(operande1);
+          if(pB != NULL)
+          {
+            setImageB("operande1",pB);
+          }
+        }
+      }
+  }
+
 
 }
 
@@ -864,6 +903,40 @@ void MainWindowPhotoShop::on_pushButtonSupprimeOperande1_clicked()
 void MainWindowPhotoShop::on_pushButtonOperande2_clicked()
 {
     // Etape 12 (TO DO)
+   int indice;
+
+  indice = getIndiceImageSelectionnee();
+  if(indice == -1)
+  {
+    dialogueErreur("erreur image selectionnee","aucune image selectionnee !");
+  }
+  else
+  {
+      Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+      Image* operande2 = instance;
+
+      ImageNG* pNG = dynamic_cast<ImageNG*>(operande2);
+      if(pNG != NULL)
+      {
+        setImageNG("operande2", pNG);
+      }
+      else
+      {
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(operande2);
+        if(pRGB != NULL)
+        {
+          setImageRGB("operande2", pRGB);
+        }
+        else
+        {
+          ImageB* pB = dynamic_cast<ImageB*>(operande2);
+          if(pB != NULL)
+          {
+            setImageB("operande2",pB);
+          }
+        }
+      }
+  }
 
 }
 

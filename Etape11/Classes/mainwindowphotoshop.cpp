@@ -812,38 +812,42 @@ void MainWindowPhotoShop::on_pushButtonModifierNom_clicked()
 
   indice = getIndiceImageSelectionnee();
 
-  Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
-
-  instance->setNom(nom);
-
-  videTableImages();
-  ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
-  Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
-
-  for(it.reset(); !it.end(); it++)
+   if(indice == -1)
   {
-    ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
-    if(pNG != NULL)
+    dialogueErreur("erreur image selectionnee","aucune image selectionnee !");
+  }
+  else
+  {
+    Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+
+    instance->setNom(nom);
+
+    videTableImages();
+    ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+    Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+    for(it.reset(); !it.end(); it++)
     {
-      type = "NG";
-    }
-    else
-    {
-      ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
-      if(pRGB != NULL)
+      ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+      if(pNG != NULL)
       {
-        type = "RGB";
+        type = "NG";
       }
       else
       {
-        type = "B";
+        ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+        if(pRGB != NULL)
+        {
+          type = "RGB";
+        }
+        else
+        {
+          type = "B";
+        }
       }
+      ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
     }
-    ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
   }
-
-
-
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

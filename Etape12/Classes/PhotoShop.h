@@ -18,8 +18,15 @@ class PhotoShop
 		PhotoShop(const PhotoShop &);
 		PhotoShop& operator=(const PhotoShop&);
 
-	public:
 		~PhotoShop();
+
+	public:
+
+		static Image* operande1;           // variables membres statiques publiques
+		static Image* operande2;
+		static Image* resultat;
+
+		static PhotoShop& getInstance();   // donne acces au singleton
 
 		void reset();
 		void ajouteImage(Image* pImage);
@@ -35,7 +42,6 @@ class PhotoShop
 		void supprimeImageParIndice(int ind);
 		void supprimeImageParId(int id);
 
-		static PhotoShop& getInstance();
 };
 
 #endif
