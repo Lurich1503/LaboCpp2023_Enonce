@@ -21,6 +21,7 @@
 #include "ArrayListException.h"
 #include "RGBException.h"
 #include "Exception.h"
+#include "Couleur.h"
 
 
 MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindowPhotoShop)
@@ -735,13 +736,50 @@ void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 void MainWindowPhotoShop::on_actionCouleur_TRUE_pour_ImageB_triggered()
 {
   // Etape 12 (TO DO)
+  int indice;
+  indice = getIndiceImageSelectionnee();
+   if(indice != -1) 
+  {
+    Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
 
+    ImageB* pB = dynamic_cast<ImageB*>(instance);
+    if(pB != NULL)
+     {
+      int rouge, vert, bleu;
+        dialogueDemandeCouleur("Veuillez choisir la couleur TRUE pour l'imageB :",&rouge,&vert,&bleu);
+        Couleur nouvelleCouleur(rouge, vert, bleu);
+        pB->couleurTrue = nouvelleCouleur;
+     }
+     else
+     {
+        dialogueErreur("mauvais type image", "cette image n'est pas de type imageB");
+     }
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionCouleur_FALSE_pour_imageB_triggered()
 {
   // Etape 12 (TO DO)
+  int indice;
+  indice = getIndiceImageSelectionnee();
+   if(indice != -1) 
+  {
+    Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
+
+    ImageB* pB = dynamic_cast<ImageB*>(instance);
+    if(pB != NULL)
+     {
+      int rouge, vert, bleu;
+        dialogueDemandeCouleur("Veuillez choisir la couleur TRUE pour l'imageB :",&rouge,&vert,&bleu);
+        Couleur nouvelleCouleur(rouge, vert, bleu);
+        pB->couleurFalse = nouvelleCouleur;
+     }
+     else
+     {
+        dialogueErreur("mauvais type image", "cette image n'est pas de type imageB");
+     }
+  }
 
 }
 
