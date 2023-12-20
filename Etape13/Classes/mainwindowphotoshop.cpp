@@ -787,6 +787,72 @@ void MainWindowPhotoShop::on_actionCouleur_FALSE_pour_imageB_triggered()
 void MainWindowPhotoShop::on_actionImporterCSV_triggered()
 {
   // Etape 13 (TO DO)
+  string nomfichier,type, extensionCSV =".csv";
+  char nombre[5],message[30]="Nombre d'images importees :" ;
+  int nb,ok = 0;
+  size_t tailleExtension = extensionCSV.size();
+
+  nomfichier = dialogueDemandeFichierOuvrir("Veuillez entrer le nom du fichier CSV:");
+
+  if(nomfichier.size() < tailleExtension)
+  {
+    ok = 0;// chaine trop courte
+  }
+  else
+  {
+    string extension_fichier = nomfichier.substr(nomfichier.size() - tailleExtension, tailleExtension); // extraire extension
+
+    if(extension_fichier == extensionCSV)
+    {
+      ok = 1;
+    }
+  }
+ 
+  if(ok==1)
+  {
+    try
+    {
+      nb = PhotoShop::getInstance().importeImages(nomfichier);
+      videTableImages();
+      ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+      Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+      for(it.reset(); !it.end(); it++)
+      {
+        ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+        if(pNG != NULL)
+        {
+          type = "NG";
+        }
+        else
+        {
+          ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+          if(pRGB != NULL)
+          {
+            type = "RGB";
+          }
+          else
+          {
+            type = "B";
+          }
+        }
+        ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+      }
+      sprintf(nombre, "%d", nb);
+      strcat (message,nombre);
+      dialogueMessage("images",message);
+    }
+    catch(const Exception& m)
+    {
+      cout << "Exception Exception catchee..." << endl;
+      cout << "message = " << m.getMessageErreur() << endl;
+      dialogueErreur("fichier CSV", "Impossible d'ouvrir ce fichier !");
+    }
+  }
+  else
+    {
+      dialogueErreur("Mauvais type fichier", "veuillez importer un fichier CSV si vous voulez importer plusieurs images a partir d'un fichier CSV");
+    }
 
 }
 

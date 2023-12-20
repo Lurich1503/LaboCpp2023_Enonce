@@ -1,6 +1,9 @@
 #include "PhotoShop.h"
 #include "Image.h"
 #include "Iterateur.h"
+#include "Exception.h"
+#include "ImageNG.h"
+#include "ImageRGB.h"
 
 int PhotoShop::numCourant = 1;
 PhotoShop PhotoShop::instance;
@@ -136,4 +139,47 @@ PhotoShop& PhotoShop::getInstance()
 ArrayList<Image*> PhotoShop::getArraylist()const
 {
 	return images;
+}
+
+int PhotoShop::importeImages(string nomFichier)
+{
+	ifstream fichier(nomFichier,ios::in);
+
+	if(!fichier.is_open())
+	{
+		throw Exception(" Erreur d'ouverture du fichier ...!");
+	}
+
+	string ligne;
+	int nombre = 0; 
+
+	while(getline(fichier, ligne))
+	{
+		nombre++;
+
+		stringstream ss(ligne);
+		string type, nomChemin, nom;
+		getline(ss, type, ';');
+		getline(ss, nomChemin, ';');
+		getline(ss, nom, ';');
+
+		if(type == "NG")
+		{
+			ImageNG* nouvelle_image = new ImageNG(nom);
+			nouvelle_image->ImageNG::importFromFile(nomChemin);
+			ajouteImage(nouvelle_image);
+		}
+		else
+		{
+			if(type == "RGB")
+			{
+				ImageRGB* nouvelle_image = new ImageRGB(nom);
+				nouvelle_image->ImageRGB::importFromFile(nomChemin);
+				ajouteImage(nouvelle_image);
+			}
+		}
+	}
+
+	fichier.close();
+	return nombre;
 }

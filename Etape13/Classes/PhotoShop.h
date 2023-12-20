@@ -5,6 +5,8 @@
 #include "ArrayList.h"
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 class PhotoShop
@@ -41,6 +43,8 @@ class PhotoShop
 
 		void supprimeImageParIndice(int ind);
 		void supprimeImageParId(int id);
+
+		int importeImages(string nomFichier);
 
 };
 
