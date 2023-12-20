@@ -127,8 +127,10 @@ void Image::Load(ifstream & fichier)
 	fichier.read((char*)&id,sizeof(int));
 	int taille;
 	fichier.read((char*)&taille, sizeof(int));
-	nom = new char[taille + 1];
-	fichier.read(&nom[0], taille * sizeof(char));
-	nom[taille] = '\0';
+	char* nomtemp = new char[taille + 1];
+	fichier.read(nomtemp, taille * sizeof(char));
+	nomtemp[taille] = '\0';
+	nom = nomtemp;
+	delete[] nomtemp;
 	dimension.Load(fichier);
 }

@@ -187,6 +187,7 @@ int PhotoShop::importeImages(string nomFichier)
 
 void PhotoShop::Save() const
 {
+	numCourant = 1; // !!! il faut que le numcourant soit egal a 1 pour ne pas que l'indice augmente a chaque fois qu'on sauvegarde car de base s'il y a deja 3 elements dans la bibliotehque, le fait d'ajouter une image ne mettra pas l'indice a 4 mais a 1
 	ofstream fichierSauvegarde("sauvegarde.dat", ios::out | ios::binary);
 
 	if(!fichierSauvegarde.is_open())
@@ -241,51 +242,50 @@ void PhotoShop::Save() const
 		
 void PhotoShop::Load()
 {
-	 ifstream fichierSauvegarde("sauvegarde.dat",ios::in | ios::binary);
-
+	ifstream fichierSauvegarde("sauvegarde.dat",ios::in | ios::binary);
     if (!fichierSauvegarde.is_open()) 
     {
-        cout << " Le fichier sauvegarde n'existe pas ! La bibliotheque d'image sera vierge." << endl;
+        throw Exception(" Le fichier sauvegarde n'existe pas ! La bibliotheque sera vierge !");
     }
-
-    fichierSauvegarde.read((char*)&numCourant, sizeof(int));
-
-    fichierSauvegarde.read((char*)&ImageB::couleurTrue, sizeof(Couleur));
-    fichierSauvegarde.read((char*)&ImageB::couleurFalse, sizeof(Couleur));
-
-    int nombreImages;
-    fichierSauvegarde.read((char*)&nombreImages, sizeof(int));
-
-    for (int i = 0; i < nombreImages; i++) 
+    else
     {
-        int typeImage;
-        fichierSauvegarde.read((char*)&typeImage, sizeof(int));
- 
-        switch (typeImage) 
-        {
-            case 1:
-            {
-                ImageNG* nouvelleImage = new ImageNG();
-                nouvelleImage->Load(fichierSauvegarde);
-                ajouteImage(nouvelleImage);
-                break;
-            }
-            case 2:
-            {
-                ImageRGB* nouvelleImage = new ImageRGB();
-                nouvelleImage->Load(fichierSauvegarde);
-                ajouteImage(nouvelleImage);
-                break;
-            }
-            case 3:
-            {
-                ImageB* nouvelleImage = new ImageB();
-                nouvelleImage->Load(fichierSauvegarde);
-                ajouteImage(nouvelleImage);
-                break;
-            }
-            default:
-                break;
-        }
-    }
+
+	    fichierSauvegarde.read((char*)&numCourant, sizeof(int));
+
+	    fichierSauvegarde.read((char*)&ImageB::couleurTrue, sizeof(Couleur));
+	    fichierSauvegarde.read((char*)&ImageB::couleurFalse, sizeof(Couleur));
+
+	    int nombreImages;
+	    fichierSauvegarde.read((char*)&nombreImages, sizeof(int));
+	    for (int i = 0; i < nombreImages; i++) 
+	    {
+	        int typeImage;
+	        fichierSauvegarde.read((char*)&typeImage, sizeof(int));
+	        cout<< typeImage<<endl;
+	        if (typeImage == 1) 
+	        {
+	            ImageNG* nouvelleImage = new ImageNG();
+	            nouvelleImage->Load(fichierSauvegarde);
+	            ajouteImage(nouvelleImage);
+	        }
+	        else
+	        {
+	        	if(typeImage == 2)
+	            {
+	                ImageRGB* nouvelleImage = new ImageRGB();
+	                nouvelleImage->Load(fichierSauvegarde);
+	                ajouteImage(nouvelleImage);
+	            }
+	            else
+	            {
+	            	if(typeImage == 3)
+	            	{
+		            	ImageB* nouvelleImage = new ImageB();
+		                nouvelleImage->Load(fichierSauvegarde);
+		                ajouteImage(nouvelleImage);
+		            }
+	            }
+	        }
+	    }
+	}
 }

@@ -77,7 +77,42 @@ MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),
 
     // Etape 14 (TO DO)
     // Restauration bibliothèque via fichier de sauvegarde
-    PhotoShop::getInstance().Load();
+    try
+    {
+      PhotoShop::getInstance().Load();
+      videTableImages();
+
+      ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
+      Iterateur<Image*> it(image);                                       // attache l'iterateur a cette liste
+
+      string type;
+      for(it.reset(); !it.end(); it++)
+      {
+        ImageNG* pNG = dynamic_cast<ImageNG*>(&it);
+        if(pNG != NULL)
+        {
+          type = "NG";
+        }
+        else
+        {
+          ImageRGB* pRGB = dynamic_cast<ImageRGB*>(&it);
+          if(pRGB != NULL)
+          {
+            type = "RGB";
+          }
+          else
+          {
+            type = "B";
+          }
+        }
+        ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
+      }
+    }
+    catch(const Exception& m)
+    {
+      cout << "Exception Exception catchee..." << endl;
+      cout << "message = " << m.getMessageErreur() << endl;
+    }
 }
 
 MainWindowPhotoShop::~MainWindowPhotoShop()
