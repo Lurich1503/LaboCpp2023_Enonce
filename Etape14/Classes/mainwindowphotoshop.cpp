@@ -77,6 +77,7 @@ MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),
 
     // Etape 14 (TO DO)
     // Restauration bibliothèque via fichier de sauvegarde
+    PhotoShop::getInstance().Load();
 }
 
 MainWindowPhotoShop::~MainWindowPhotoShop()
@@ -389,8 +390,20 @@ void MainWindowPhotoShop::closeEvent(QCloseEvent *event)
 {
   if (event == NULL) {} // pour éviter le warning à la compilation
   // Etape 14 (TO DO)
-
-  QApplication::exit();
+    int choix;
+    
+    choix = dialogueDemandeInt("sauvegarde", "sauvegarder bibliothèque (1), ne pas sauvegarder (tout chiffre sauf 1):");
+      if(choix == 1)
+      {
+          PhotoShop::getInstance().Save();
+          dialogueMessage("Sauvegarde","Sauvegarde OK. Bye!");
+      }
+      else
+      {
+        dialogueMessage("Sauvegarde","Vous n'avez pas fait de sauvegarde. Bye!");
+      }
+      QApplication::exit();
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -399,8 +412,19 @@ void MainWindowPhotoShop::closeEvent(QCloseEvent *event)
 void MainWindowPhotoShop::on_actionQuitter_triggered()
 {
   // Etape 14 (TO DO)
-
-  QApplication::exit();
+  int choix;
+    
+    choix = dialogueDemandeInt("sauvegarde", "sauvegarder bibliothèque (1), ne pas sauvegarder (tout chiffre sauf 1):");
+      if(choix == 1)
+      {
+          PhotoShop::getInstance().Save();
+          dialogueMessage("Sauvegarde","Sauvegarde OK. Bye!");
+      }
+      else
+      {
+        dialogueMessage("Sauvegarde","Vous n'avez pas fait de sauvegarde. Bye!");
+      }
+      QApplication::exit();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -411,7 +435,11 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
 
 
   NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageNG :");
-  if(NomFichier != "")
+  if(extension_valide(NomFichier)== -1)
+  {
+      dialogueErreur("erreur de nom de fichier", "le nom de fichier de l'image doit se terminer par .jpg ou .bmp ou .png !");
+  }
+  else
   {
     ImageNG* instance;
 
@@ -458,7 +486,11 @@ void MainWindowPhotoShop::on_actionCharger_ImageRGB_triggered()
 
   NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageRGB :");
 
-  if(NomFichier != "")
+  if(extension_valide(NomFichier)== -1)
+  {
+      dialogueErreur("erreur de nom de fichier", "le nom de fichier de l'image doit se terminer par .jpg ou .bmp ou .png !");
+  }
+  else
   {
 
     ImageRGB* instance;
@@ -736,51 +768,20 @@ void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 void MainWindowPhotoShop::on_actionCouleur_TRUE_pour_ImageB_triggered()
 {
   // Etape 12 (TO DO)
-  int indice;
-  indice = getIndiceImageSelectionnee();
-   if(indice != -1) 
-  {
-    Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
-
-    ImageB* pB = dynamic_cast<ImageB*>(instance);
-    if(pB != NULL)
-     {
-      int rouge, vert, bleu;
-        dialogueDemandeCouleur("Veuillez choisir la couleur TRUE pour l'imageB :",&rouge,&vert,&bleu);
-        Couleur nouvelleCouleur(rouge, vert, bleu);
-        pB->couleurTrue = nouvelleCouleur;
-     }
-     else
-     {
-        dialogueErreur("mauvais type image", "cette image n'est pas de type imageB");
-     }
-  }
+  int rouge, vert, bleu;
+  dialogueDemandeCouleur("Veuillez choisir la couleur TRUE pour les imagesB :",&rouge,&vert,&bleu);
+  Couleur nouvelleCouleur(rouge, vert, bleu);
+  ImageB::couleurTrue = nouvelleCouleur;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionCouleur_FALSE_pour_imageB_triggered()
 {
   // Etape 12 (TO DO)
-  int indice;
-  indice = getIndiceImageSelectionnee();
-   if(indice != -1) 
-  {
-    Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
-
-    ImageB* pB = dynamic_cast<ImageB*>(instance);
-    if(pB != NULL)
-     {
-      int rouge, vert, bleu;
-        dialogueDemandeCouleur("Veuillez choisir la couleur TRUE pour l'imageB :",&rouge,&vert,&bleu);
-        Couleur nouvelleCouleur(rouge, vert, bleu);
-        pB->couleurFalse = nouvelleCouleur;
-     }
-     else
-     {
-        dialogueErreur("mauvais type image", "cette image n'est pas de type imageB");
-     }
-  }
-
+  int rouge, vert, bleu;
+  dialogueDemandeCouleur("Veuillez choisir la couleur FALSE pour les imagesB :",&rouge,&vert,&bleu);
+  Couleur nouvelleCouleur(rouge, vert, bleu);
+  ImageB::couleurFalse = nouvelleCouleur;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

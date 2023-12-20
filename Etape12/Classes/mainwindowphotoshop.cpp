@@ -411,7 +411,11 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
 
 
   NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageNG :");
-  if(NomFichier != "")
+  if(extension_valide(NomFichier)== -1)
+  {
+      dialogueErreur("erreur de nom de fichier", "le nom de fichier de l'image doit se terminer par .jpg ou .bmp ou .png !");
+  }
+  else
   {
     ImageNG* instance;
 
@@ -458,7 +462,11 @@ void MainWindowPhotoShop::on_actionCharger_ImageRGB_triggered()
 
   NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageRGB :");
 
-  if(NomFichier != "")
+  if(extension_valide(NomFichier)== -1)
+  {
+      dialogueErreur("erreur de nom de fichier", "le nom de fichier de l'image doit se terminer par .jpg ou .bmp ou .png !");
+  }
+  else
   {
 
     ImageRGB* instance;
@@ -736,51 +744,20 @@ void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 void MainWindowPhotoShop::on_actionCouleur_TRUE_pour_ImageB_triggered()
 {
   // Etape 12 (TO DO)
-  int indice;
-  indice = getIndiceImageSelectionnee();
-   if(indice != -1) 
-  {
-    Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
-
-    ImageB* pB = dynamic_cast<ImageB*>(instance);
-    if(pB != NULL)
-     {
-      int rouge, vert, bleu;
-        dialogueDemandeCouleur("Veuillez choisir la couleur TRUE pour l'imageB :",&rouge,&vert,&bleu);
-        Couleur nouvelleCouleur(rouge, vert, bleu);
-        pB->couleurTrue = nouvelleCouleur;
-     }
-     else
-     {
-        dialogueErreur("mauvais type image", "cette image n'est pas de type imageB");
-     }
-  }
+    int rouge, vert, bleu;
+    dialogueDemandeCouleur("Veuillez choisir la couleur TRUE pour les imagesB :",&rouge,&vert,&bleu);
+    Couleur nouvelleCouleur(rouge, vert, bleu);
+    ImageB::couleurTrue = nouvelleCouleur;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionCouleur_FALSE_pour_imageB_triggered()
 {
   // Etape 12 (TO DO)
-  int indice;
-  indice = getIndiceImageSelectionnee();
-   if(indice != -1) 
-  {
-    Image* instance = PhotoShop::getInstance().getImageParIndice(indice);
-
-    ImageB* pB = dynamic_cast<ImageB*>(instance);
-    if(pB != NULL)
-     {
-      int rouge, vert, bleu;
-        dialogueDemandeCouleur("Veuillez choisir la couleur TRUE pour l'imageB :",&rouge,&vert,&bleu);
-        Couleur nouvelleCouleur(rouge, vert, bleu);
-        pB->couleurFalse = nouvelleCouleur;
-     }
-     else
-     {
-        dialogueErreur("mauvais type image", "cette image n'est pas de type imageB");
-     }
-  }
-
+    int rouge, vert, bleu;
+    dialogueDemandeCouleur("Veuillez choisir la couleur FALSE pour les imagesB :",&rouge,&vert,&bleu);
+    Couleur nouvelleCouleur(rouge, vert, bleu);
+    ImageB::couleurFalse = nouvelleCouleur;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

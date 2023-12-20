@@ -46,6 +46,9 @@ class PhotoShop
 
 		int importeImages(string nomFichier);
 
+		void Save() const;
+		void Load();
+
 };
 
 #endif

@@ -408,8 +408,13 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
 
 
   NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageNG :");
-  if(NomFichier != "")
+  if(extension_valide(NomFichier)== -1)
   {
+      dialogueErreur("erreur de nom de fichier", "le nom de fichier de l'image doit se terminer par .jpg ou .bmp ou .png !");
+  }
+  else
+  {
+  
     ImageNG* instance;
 
     instance = new ImageNG(NomFichier);
@@ -455,7 +460,11 @@ void MainWindowPhotoShop::on_actionCharger_ImageRGB_triggered()
 
   NomFichier = dialogueDemandeFichierOuvrir("chargez une ImageRGB :");
 
-  if(NomFichier != "")
+  if(extension_valide(NomFichier)== -1)
+  {
+      dialogueErreur("erreur de nom de fichier", "le nom de fichier de l'image doit se terminer par .jpg ou .bmp ou .png !");
+  }
+  else
   {
 
     ImageRGB* instance;
