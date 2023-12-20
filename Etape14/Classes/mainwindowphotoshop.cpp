@@ -743,7 +743,7 @@ void MainWindowPhotoShop::on_actionImage_selectionn_e_triggered()
       }
       ajouteTupleTableImages((&it)->getId(), type, to_string((&it)->getDimension().getLargeur()) + "x" + to_string((&it)->getDimension().getHauteur()), (&it)->getNom());
     }
-    setImageNG("selection",NULL);
+    setImageNG("selection",NULL);// mettre null la selection 
     setParametresImageNG(-1, -1, -1, 0);
     setNomImage("");
   }
@@ -896,6 +896,14 @@ void MainWindowPhotoShop::on_actionImporterCSV_triggered()
 void MainWindowPhotoShop::on_actionReset_triggered()
 {
   // Etape 14 (TO DO)
+  PhotoShop::getInstance().reset();
+  videTableImages();
+  setImageNG("selection",NULL);
+  setParametresImageNG(-1, -1, -1, 0);
+  setNomImage("");
+  setImageNG("operande1",NULL);
+  setImageNG("operande2",NULL);
+  setImageNG("resultat",NULL);
 
 }
 

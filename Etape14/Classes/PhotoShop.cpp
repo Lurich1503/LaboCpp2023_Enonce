@@ -129,6 +129,9 @@ void PhotoShop::reset()
 		Image* img = images.retireElement(0);
 		delete img;
 	}
+	numCourant = 1;
+	ImageB::couleurTrue = Couleur::BLANC;
+	ImageB::couleurFalse = Couleur::NOIR;
 }
 
 
