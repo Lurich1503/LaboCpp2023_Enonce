@@ -5,6 +5,7 @@
 #include "ImageNG.h"
 #include "ImageRGB.h"
 #include "ImageB.h"
+#include "ArrayListException.h"
 
 int PhotoShop::numCourant = 1;
 PhotoShop PhotoShop::instance;
@@ -79,7 +80,14 @@ Image* PhotoShop::getImageParIndice(int indice)
 		i++;
 		it++;
 	}
-	return (&it);
+	if(i == indice && !it.end())
+	{
+		return (&it);
+	}
+	else
+	{
+		throw ARRAYLISTException(indice, "indice invalide ou liste inexistante!");
+	}
 }
 
 
@@ -92,7 +100,14 @@ Image* PhotoShop::getImageParId(int id)
 	{
 		it++;
 	}
-	return (&it);
+	if(!it.end() && (&it)->getId() == id)
+	{
+		return (&it);
+	}
+	else
+	{
+		throw ARRAYLISTException(id, "id invalide ou liste inexistante!");
+	}
 }
 
 
@@ -114,10 +129,17 @@ void PhotoShop::supprimeImageParId(int id)
 		it++;
 		i++;
 	}
-	
-	Image* img = images.retireElement(i);
 
-	delete img;
+	if(!it.end() && (&it)->getId() == id)
+	{
+		Image* img = images.retireElement(i);
+
+		delete img;
+	}
+	else
+	{
+		throw ARRAYLISTException(id, "id invalide ou liste inexistante!");
+	}
 
 }
 

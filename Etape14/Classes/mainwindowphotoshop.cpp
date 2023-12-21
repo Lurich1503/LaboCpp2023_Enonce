@@ -754,19 +754,19 @@ void MainWindowPhotoShop::on_actionImage_selectionn_e_triggered()
 void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 {
   // Etape 11 (TO DO)
-  int indice;
+  int id;
   string type;
-  indice = dialogueDemandeInt("Supprimer image par id", "veuillez entrer un indice :");
+  id = dialogueDemandeInt("Supprimer image par id", "veuillez entrer un id :");
   try
   {
-    PhotoShop::getInstance().supprimeImageParIndice(indice);
+    PhotoShop::getInstance().supprimeImageParId(id);
   }
   catch(const ARRAYLISTException& m)
   {
     cout << "Exception ARRAYLISTException catchee..." << endl;
     cout << "message = " << m.getMessageErreur() << endl;
     cout << "valeur de l'indice = " << m.getValeur() << endl;
-    dialogueErreur("erreur indice selectionnee","aucune image a cet indice dans la liste !");
+    dialogueErreur("erreur indice selectionnee","aucune image pour cet id dans la liste !");
   }
     videTableImages();
     ArrayList<Image*> image = PhotoShop::getInstance().getArraylist(); // récupère la liste qui existe
