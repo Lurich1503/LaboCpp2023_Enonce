@@ -1320,9 +1320,9 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
             }
             else
             {
-                int valeur = dialogueDemandeInt("Eclaircir (+val)","Entrez une valeur :");
                 try
                 {
+                  int valeur = dialogueDemandeInt("Eclaircir (+val)","Entrez une valeur (positive) :");
                   ImageNG* img_resultat = new ImageNG();
                   (*img_resultat) = (*pNG); // je mets image de pNG dans img_resultat pour ne pas modifier l'image dans la liste d'images car pNG pointe vers la liste!!!
                   (*img_resultat) = (*img_resultat) + valeur;
@@ -1333,7 +1333,7 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
                   cout << "Exception RGBException catchee..." << endl;
                   cout << "message = " << m.getMessageErreur() << endl;
                   cout << "valeur = " << m.getValeur() << endl;
-                  dialogueErreur("Niveau de gris invalide","Impossible d'eclaircir l'image avec cette valeur !");
+                  dialogueErreur("erreur","la valeur entree doit etre positive !");
                 }
             }
         }
@@ -1375,9 +1375,9 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
               }
               else
               {
-                  int valeur = dialogueDemandeInt("Assombrir (- val)","Entrez une valeur :");
                   try
                   {
+                    int valeur = dialogueDemandeInt("Assombrir (- val)","Entrez une valeur (positive) :");
                     ImageNG* img_resultat = new ImageNG();
                     (*img_resultat) = (*pNG); // je mets image de pNG dans img_resultat pour ne pas modifier l'image dans la liste d'images car pNG pointe vers la liste!!!
                     (*img_resultat) = (*img_resultat) - valeur;
@@ -1388,7 +1388,7 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
                     cout << "Exception RGBException catchee..." << endl;
                     cout << "message = " << m.getMessageErreur() << endl;
                     cout << "valeur = " << m.getValeur() << endl;
-                    dialogueErreur("Niveau de gris invalide","Impossible d'assombrir l'image avec cette valeur !");
+                    dialogueErreur("erreur","la valeur entree doit etre positive !");
                   }
               }
             }
@@ -1437,20 +1437,10 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
                           }
                           else
                           {
-                              try
-                              {
                                 ImageNG* img_resultat = new ImageNG();
                                 (*img_resultat) = (*pNG);
                                 (*img_resultat) = (*img_resultat) - (*pNG1);
                                 PhotoShop::resultat = img_resultat;
-                              } 
-                              catch(const RGBException& m)
-                              {
-                                cout << "Exception RGBException catchee..." << endl;
-                                cout << "message = " << m.getMessageErreur() << endl;
-                                cout << "valeur = " << m.getValeur() << endl;
-                                dialogueErreur("Niveau de gris invalide","Impossible d'effectuer la difference entre les  2 images !");
-                              }
                           }
                       }
                     }

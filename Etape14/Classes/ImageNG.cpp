@@ -360,6 +360,11 @@ ostream& operator<<(ostream& s, const ImageNG& p)
 
 ImageNG ImageNG::operator+(int nb)
 {
+	if(nb<0)
+	{
+		throw RGBException(nb, "le chiffre entre doit etre positif !");
+	}
+
 	ImageNG img(*this);
 	
 	for (int x=0; x<img.dimension.getLargeur(); x++)
@@ -372,7 +377,7 @@ ImageNG ImageNG::operator+(int nb)
 			}
 			else
 			{
-				throw RGBException(img.getPixel(x,y)+nb, "Niveau de gris invalide !");
+				img.setPixel(x,y,255);
 			}
 		}
 	}
@@ -382,6 +387,11 @@ ImageNG ImageNG::operator+(int nb)
 
 ImageNG ImageNG::operator-(int nb)
 {
+	if(nb<0)
+	{
+		throw RGBException(nb, "le chiffre entre doit etre positif !");
+	}
+
 	ImageNG img(*this);
 
 	for (int x=0; x<img.dimension.getLargeur(); x++)
@@ -394,7 +404,7 @@ ImageNG ImageNG::operator-(int nb)
 			}
 			else
 			{
-				throw RGBException(img.getPixel(x,y)-nb, "Niveau de gris invalide !");
+				img.setPixel(x,y,0);
 			}
 		}
 	}
@@ -404,6 +414,11 @@ ImageNG ImageNG::operator-(int nb)
 
 ImageNG operator+(int nb, ImageNG& p)
 {
+	if(nb<0)
+	{
+		throw RGBException(nb, "le chiffre entre doit etre positif !");
+	}
+	
 	return p+nb;
 }
 
@@ -447,7 +462,7 @@ ImageNG ImageNG::operator-(const ImageNG& im2)
 			}
 			else
 			{
-				throw RGBException(img.getPixel(x,y)-im2.getPixel(x,y), "Niveau de gris invalide !");
+				img.setPixel(x,y,0);
 			}
 		}
 	}	
